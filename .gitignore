@@ -1,0 +1,7 @@
+# exec
+philo
+philo_bonus
+
+# objs
+obj
+*.o
