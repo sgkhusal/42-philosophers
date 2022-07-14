@@ -1,61 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop.c                                             :+:      :+:    :+:   */
+/*   args_primes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/05 19:12:15 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/08 15:10:08 by sguilher         ###   ########.fr       */
+/*   Created: 2022/07/06 14:53:18 by sguilher          #+#    #+#             */
+/*   Updated: 2022/07/06 15:08:24 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <unistd.h>
 
-#define THREAD_NUM 30
-
-int	mails = 0;
-pthread_mutex_t	mutex;
+int	primes[10] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 };
 
 void	*routine(void *arg)
 {
-	int	i;
+	int	index;
 
-	i = 0;
-	while (i < 1000000)
-	{
-		pthread_mutex_lock(&mutex);
-		mails++;
-		i++;
-		pthread_mutex_unlock(&mutex);
-	}
+	sleep(1);
+	index = *(int *)arg;
+	printf("%d ", primes[index]);
 }
 
 int	main(void)
 {
-	pthread_t	threads[THREAD_NUM];
+	pthread_t	threads[10];
+	int			pos[10];
 	int			i;
 
 	i = 0;
-	pthread_mutex_init(&mutex, NULL);
-	while (i < THREAD_NUM)
+	while (i < 10)
 	{
-		if (pthread_create(&threads[i], NULL, &routine, NULL))
+		pos[i] = i;
+		if (pthread_create(&threads[i], NULL, &routine, (void *)&pos[i]) != 0)
 			perror("Failed to create thread");
-		else
-			printf("Thread %d has started.\n", i);
 		i++;
 	}
 	i = 0;
-	while (i < THREAD_NUM)
+	while (i < 10)
 	{
 		if (pthread_join(threads[i], NULL))
 			perror("Failed to join thread");
-		else
-			printf("Thread %d has finished execution.\n", i);
 		i++;
 	}
-	printf("Total e-mails = %d\n", mails);
+	printf("\n");
+	return (0);
 }

@@ -1,7 +1,10 @@
 # exec
 philo
 philo_bonus
+*.out
 
 # objs
 obj
 *.o
+
+.vscode
