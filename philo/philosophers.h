@@ -6,12 +6,12 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/16 00:03:34 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/16 01:45:43 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
 # include <unistd.h>
 # include <stdio.h> // printf
@@ -40,7 +40,6 @@
 # define IS_VALID 0
 # define IS_NOT_VALID 1
 
-
 // colors
 //# define GREEN "\033[0;32m"
 # define RED "\033[38;2;222;56;43m"
@@ -56,30 +55,34 @@ typedef struct s_data
 
 typedef struct s_philo_data
 {
-	int	number;
-	int	*left_fork;
-	int	*right_fork;
-	int	is_last_philosopher;
-	int	must_eat;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	number_of_times_must_eat;
+	int				number;
+	int				*left_fork;
+	int				*right_fork;
+	int				is_last_philosopher; // ainda não usando
+	int				must_eat;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				number_of_times_must_eat;
+	struct timeval	init_tv;
 }				t_philo_data;
 
 // check input
-int	handle_input(int argc, char *argv[]);
+int				handle_input(int argc, char *argv[]);
 
-int	*create_forks(int number_of_forks);
-t_philo_data	*init_philosopher_data(int number_of_philosophers, int *forks, char *argv[]);
-pthread_t	*create_philosophers(int number_of_philosophers, t_philo_data *philosopher_data);
-void	join_philosophers(pthread_t *philosophers, int number_of_philosophers);
+int				*create_forks(int number_of_forks);
+t_philo_data	*init_philosopher_data(int number_of_philosophers,
+					int *forks, char *argv[], struct timeval init_tv);
+pthread_t		*create_philosophers(int number_of_philosophers,
+					t_philo_data *philosopher_data);
+void			join_philosophers(pthread_t *philosophers,
+					int number_of_philosophers);
 
 // actions
-void	*routine(void *arg);
+void			*routine(void *arg);
 
 // utils
-int	ft_isdigit(int c);
-long int	ft_atol(const char *nptr);
+int				ft_isdigit(int c);
+long int		ft_atol(const char *nptr);
 
 #endif

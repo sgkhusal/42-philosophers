@@ -6,12 +6,11 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 00:01:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/16 00:02:01 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/16 01:46:45 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
 
 int	*create_forks(int number_of_forks)
 {

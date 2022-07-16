@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/16 00:24:48 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/16 01:41:28 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	first_philosopher_data(t_philo_data *philosopher_data,
 }
 
 t_philo_data	*init_philosopher_data(int number_of_philosophers,
-	int *forks, char *argv[])
+	int *forks, char *argv[], struct timeval init_tv)
 {
 	t_philo_data	*philosopher_data;
-	int	i;
+	int				i;
 
 	philosopher_data = malloc(sizeof(t_philo_data) * number_of_philosophers);
 	if (philosopher_data == NULL)
@@ -38,6 +38,7 @@ t_philo_data	*init_philosopher_data(int number_of_philosophers,
 	{
 		philosopher_data[i].number = i + 1;
 		philosopher_data[i].right_fork = &forks[i];
+		philosopher_data[i].init_tv = init_tv;
 		if (i == 0)
 			first_philosopher_data(philosopher_data, number_of_philosophers, forks, argv);
 		else
@@ -52,10 +53,11 @@ t_philo_data	*init_philosopher_data(int number_of_philosophers,
 	return (philosopher_data);
 }
 
-pthread_t	*create_philosophers(int number_of_philosophers, t_philo_data *philosopher_data)
+pthread_t	*create_philosophers(int number_of_philosophers,
+	t_philo_data *philosopher_data)
 {
 	pthread_t	*philosophers;
-	int	i;
+	int			i;
 
 	philosophers = malloc(sizeof(pthread_t) * number_of_philosophers);
 	if (philosophers == NULL)
@@ -63,7 +65,8 @@ pthread_t	*create_philosophers(int number_of_philosophers, t_philo_data *philoso
 	i = 0;
 	while (i < number_of_philosophers)
 	{
-		if (pthread_create(&philosophers[i], NULL, &routine, (void *)&philosopher_data[i]) != 0)
+		if (pthread_create(&philosophers[i], NULL, &routine,
+				(void *)&philosopher_data[i]) != 0)
 		{
 			printf("Error creating philosopher %i thread.\n", i + 1);
 			free (philosophers); // tá certo fazer isso?
