@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/07/05 15:55:29 by sguilher         ###   ########.fr        #
+#    Updated: 2022/07/16 00:04:48 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME	=	philo
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -g -pthread
 
-SRC		=	philosophers.c
+SRC		=	main.c handle_input.c forks.c philosophers.c actions.c $(UTILS)
+UTILS	=	ft_atol.c
 HEADER	=	philosophers.h
 
 OBJ_DIR	=	obj
