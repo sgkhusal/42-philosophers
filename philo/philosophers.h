@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/16 01:45:43 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:24:16 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ typedef struct s_philo_data
 	int				*left_fork;
 	int				*right_fork;
 	int				is_last_philosopher; // ainda não usando
-	int				must_eat;
+	int				is_first_philosopher; // ainda não usando
+	int				must_eat; // ainda não usando
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_of_times_must_eat;
+	pthread_mutex_t	mutex;
 	struct timeval	init_tv;
 }				t_philo_data;
 
@@ -71,8 +73,8 @@ typedef struct s_philo_data
 int				handle_input(int argc, char *argv[]);
 
 int				*create_forks(int number_of_forks);
-t_philo_data	*init_philosopher_data(int number_of_philosophers,
-					int *forks, char *argv[], struct timeval init_tv);
+t_philo_data	*init_philosopher_data(int number_of_philosophers, int *forks,
+					pthread_mutex_t mutex, char *argv[]);
 pthread_t		*create_philosophers(int number_of_philosophers,
 					t_philo_data *philosopher_data);
 void			join_philosophers(pthread_t *philosophers,
@@ -80,6 +82,10 @@ void			join_philosophers(pthread_t *philosophers,
 
 // actions
 void			*routine(void *arg);
+
+// time
+double			get_delta_time(struct timeval init_tv);
+void			time_wait(int time, struct timeval tv);
 
 // utils
 int				ft_isdigit(int c);

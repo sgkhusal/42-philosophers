@@ -6,65 +6,68 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/16 01:41:28 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:25:27 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	first_philosopher_data(t_philo_data *philosopher_data,
-	int number_of_philosophers, int *forks, char *argv[])
+void	first_philo_data(t_philo_data *philo_data,
+	int philo_qty, int *forks, char *argv[])
 {
-	philosopher_data[0].time_to_die = ft_atol(argv[2]);
-	philosopher_data[0].time_to_eat = ft_atol(argv[3]);
-	philosopher_data[0].time_to_sleep = ft_atol(argv[4]);
-	if (number_of_philosophers != 1)
-		philosopher_data[0].left_fork = &forks[number_of_philosophers - 1];
+	philo_data[0].time_to_die = ft_atol(argv[2]);
+	philo_data[0].time_to_eat = ft_atol(argv[3]);
+	philo_data[0].time_to_sleep = ft_atol(argv[4]);
+	if (philo_qty != 1)
+		philo_data[0].left_fork = &forks[philo_qty - 1];
 	else
-		philosopher_data[0].left_fork = NULL; // será que precisa??
+		philo_data[0].left_fork = NULL; // será que precisa??
 }
 
 t_philo_data	*init_philosopher_data(int number_of_philosophers,
-	int *forks, char *argv[], struct timeval init_tv)
+	int *forks, pthread_mutex_t mutex, char *argv[])
 {
-	t_philo_data	*philosopher_data;
+	t_philo_data	*philo_data;
 	int				i;
 
-	philosopher_data = malloc(sizeof(t_philo_data) * number_of_philosophers);
-	if (philosopher_data == NULL)
+	philo_data = malloc(sizeof(t_philo_data) * number_of_philosophers);
+	if (philo_data == NULL)
 		return (NULL);
 	i = 0;
 	while (i < number_of_philosophers)
 	{
-		philosopher_data[i].number = i + 1;
-		philosopher_data[i].right_fork = &forks[i];
-		philosopher_data[i].init_tv = init_tv;
+		philo_data[i].number = i + 1;
+		philo_data[i].mutex = mutex;
+		philo_data[i].right_fork = &forks[i];
 		if (i == 0)
-			first_philosopher_data(philosopher_data, number_of_philosophers, forks, argv);
+			first_philo_data(philo_data, number_of_philosophers, forks, argv);
 		else
 		{
-			philosopher_data[i].time_to_die = philosopher_data[i - 1].time_to_die;
-			philosopher_data[i].time_to_eat = philosopher_data[i - 1].time_to_eat;
-			philosopher_data[i].time_to_sleep = philosopher_data[i - 1].time_to_sleep;
-			philosopher_data[i].left_fork = &forks[i - 1];
+			philo_data[i].time_to_die = philo_data[i - 1].time_to_die;
+			philo_data[i].time_to_eat = philo_data[i - 1].time_to_eat;
+			philo_data[i].time_to_sleep = philo_data[i - 1].time_to_sleep;
+			philo_data[i].left_fork = &forks[i - 1];
 		}
 		i++;
 	}
-	return (philosopher_data);
+	return (philo_data);
 }
 
 pthread_t	*create_philosophers(int number_of_philosophers,
 	t_philo_data *philosopher_data)
 {
-	pthread_t	*philosophers;
-	int			i;
+	struct timeval	init_tv;
+	pthread_t		*philosophers;
+	int				i;
 
 	philosophers = malloc(sizeof(pthread_t) * number_of_philosophers);
 	if (philosophers == NULL)
 		return (NULL);
 	i = 0;
+	gettimeofday(&init_tv, NULL);
 	while (i < number_of_philosophers)
 	{
+		philosopher_data[i].init_tv = init_tv;
 		if (pthread_create(&philosophers[i], NULL, &routine,
 				(void *)&philosopher_data[i]) != 0)
 		{

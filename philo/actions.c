@@ -6,46 +6,23 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/16 02:33:21 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/20 16:27:55 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-double	get_delta_time(struct timeval init_tv)
-{
-	struct timeval	tv;
-	double			delta_time;
-
-	gettimeofday(&tv, NULL);
-	delta_time = (tv.tv_sec - init_tv.tv_sec) * 1000;
-	delta_time += (double)(tv.tv_usec - init_tv.tv_usec) / 1000;
-	return (delta_time);
-}
-
-void	time_wait(int time, struct timeval tv)
-{
-	double	delta_time;
-
-	usleep(time * 900);
-	while (delta_time < time)
-	{
-		usleep(100);
-		delta_time = get_delta_time(tv);
-	}
-}
-
-void	philo_eat(int philosopher, int time_to_eat, struct timeval init_tv)
+void	philo_eat(int philosopher, int time_to_eat, t_philo_data *data)
 {
 	double			delta_time;
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	delta_time = get_delta_time(init_tv);
+	delta_time = get_delta_time(data->init_tv);
 	printf("%f %i has taken a fork\n", delta_time, philosopher);
-	delta_time = get_delta_time(init_tv);
+	delta_time = get_delta_time(data->init_tv);
 	printf("%f %i has taken a fork\n", delta_time, philosopher);
-	delta_time = get_delta_time(init_tv);
+	delta_time = get_delta_time(data->init_tv);
 	printf("%f %i is eating\n", delta_time, philosopher);
 	time_wait(time_to_eat, tv);
 }
@@ -77,15 +54,18 @@ void	philo_die(int philosopher, struct timeval init_tv)
 	printf("%f %i died\n", delta_time, philosopher);
 }
 
-void	*routine(void *arg)
+void	*routine(void *args)
 {
-	t_philo_data	*philosopher_data;
+	t_philo_data	*data;
 
-	philosopher_data = (t_philo_data *)arg;
-	printf("Hello from philosopher %i\n", philosopher_data->number);
-	philo_eat(philosopher_data->number, philosopher_data->time_to_eat, philosopher_data->init_tv);
-	philo_sleep(philosopher_data->number, philosopher_data->time_to_sleep, philosopher_data->init_tv);
-	philo_think(philosopher_data->number, philosopher_data->init_tv);
-	philo_die(philosopher_data->number, philosopher_data->init_tv);
+	data = (t_philo_data *)args;
+	printf("Hello from philosopher %i\n", data->number);
+	while (1) // enquanto não morre
+	{
+		philo_eat(data->number, data->time_to_eat, data);
+		philo_sleep(data->number, data->time_to_sleep, data->init_tv);
+		philo_think(data->number, data->init_tv);
+	}
+	philo_die(data->number, data->init_tv);
 	return ("tchau");
 }
