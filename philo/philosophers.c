@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 23:51:35 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/21 00:59:45 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ pthread_t	*create_philosophers(int number_of_philosophers,
 	if (philosophers == NULL)
 		return (NULL);
 	i = 0;
+	//if (number_of_philosophers == 1)  // e se for == 0?? - assim como os outros parâmetros
+		// return criar a thread para um filósofo com a função específica
 	gettimeofday(&init_tv, NULL);
 	while (i < number_of_philosophers)
 	{

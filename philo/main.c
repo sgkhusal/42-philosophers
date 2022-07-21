@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:57:12 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 23:47:09 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/21 00:48:54 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	main(int argc, char *argv[])
 	if (handle_input(argc, argv) == FAILED)
 		return (E_INVAL);
 	number_of_philosophers = ft_atol(argv[1]);
-	// se número de filósofos = 1: deve morrer - left_fork: problema!!
-	// pode printar a mensagem de morte e fechar direto??
 	forks = create_forks(number_of_philosophers);
 	if (forks == NULL)
 		return (E_MALLOC);

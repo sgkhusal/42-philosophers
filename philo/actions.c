@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/21 00:27:44 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/21 00:57:51 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,34 @@ void	philo_die(int philosopher, struct timeval init_tv)
 	printf("%f %i died\n", delta_time, philosopher);
 }
 
+void	*only_one_philo(t_fork *right_fork, int time_to_die, struct timeval init_tv)
+{
+	double			delta_time;
+
+	pthread_mutex_lock(&(right_fork->mutex));
+	right_fork->status = FORK_NOT_AVAILABLE;
+	delta_time = get_delta_time(init_tv);
+	printf("%f 1 has taken a fork\n", delta_time);
+	time_wait(time_to_die, init_tv);
+	philo_die(1, init_tv);
+	pthread_mutex_unlock(&(right_fork->mutex));
+	return ("died");
+}
+
+// TODO: lidar com os deltas ts == 0!!
 void	*routine(void *args)
 {
 	t_philo_args	*philo_args;
 	int				philo_alive;
 
 	philo_args = (t_philo_args *)args;
+	if (philo_args->left_fork == NULL) // pode passar para uma rotina diferente
+		return (only_one_philo(philo_args->right_fork, philo_args->time_to_die, philo_args->init_tv));
 	if (philo_args->number % 2 == 0)
 		usleep(philo_args->time_to_eat * 0.9 * 1000); // verificar um valor bom
 	if (philo_args->number % 2 == 1 && philo_args->is_last_philosopher)
 		usleep(philo_args->time_to_eat * 1.9 * 1000); // verificar um valor bom
 	philo_alive = 10; // alterar
-	//se qty de philos = 1, esperar até dar o tempo de morte
 	while (philo_alive && philo_args->number_of_times_must_eat) // enquanto não morre
 	{
 		if (philo_args->right_fork->status == FORK_NOT_AVAILABLE || philo_args->left_fork->status == FORK_NOT_AVAILABLE)
@@ -95,6 +111,9 @@ void	*routine(void *args)
 		philo_alive--;
 	}
 	if (!philo_alive)
+	{
 		philo_die(philo_args->number, philo_args->init_tv);
+		return ("died");
+	}
 	return ("bye");
 }
