@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:57:12 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 23:34:11 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:47:09 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char *argv[])
 	if (forks == NULL)
 		return (E_MALLOC);
 	philosophers_args = create_philosophers_args(number_of_philosophers,
-			forks, argv);
+			forks, argv, argc);
 	if (philosophers_args == NULL)
 		return (E_MALLOC); // must clean
 	philosophers = create_philosophers(number_of_philosophers,

@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 23:05:24 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:51:35 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	fill_philo_args(t_philo_args *philo_args,
 		philo_args[i].time_to_die = philo_args[0].time_to_die;
 		philo_args[i].time_to_eat = philo_args[0].time_to_eat;
 		philo_args[i].time_to_sleep = philo_args[0].time_to_sleep;
+		philo_args[i].number_of_times_must_eat = philo_args[0].number_of_times_must_eat;
 		philo_args[i].is_first_philosopher = NO;
 		if (i + 1 == number_of_philosophers)
 			philo_args[i].is_last_philosopher = YES;
@@ -52,7 +53,7 @@ static void	fill_philo_args(t_philo_args *philo_args,
 }
 
 t_philo_args	*create_philosophers_args(int number_of_philosophers,
-	t_fork *forks, char *argv[])
+	t_fork *forks, char *argv[], int argc)
 {
 	t_philo_args	*philo_args;
 
@@ -60,6 +61,10 @@ t_philo_args	*create_philosophers_args(int number_of_philosophers,
 	if (philo_args == NULL)
 		return (NULL);
 	fill_first_philo_args(philo_args, number_of_philosophers, forks, argv);
+	if (argc == 6)
+		philo_args[0].number_of_times_must_eat = ft_atol(argv[5]);
+	else
+		philo_args[0].number_of_times_must_eat = -1;
 	if (number_of_philosophers > 1)
 		fill_philo_args(philo_args, number_of_philosophers, forks);
 	return (philo_args);

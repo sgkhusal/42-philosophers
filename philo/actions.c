@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 23:27:00 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/21 00:27:44 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void	*routine(void *args)
 		usleep(philo_args->time_to_eat * 0.9 * 1000); // verificar um valor bom
 	if (philo_args->number % 2 == 1 && philo_args->is_last_philosopher)
 		usleep(philo_args->time_to_eat * 1.9 * 1000); // verificar um valor bom
-	philo_alive = 10;
+	philo_alive = 10; // alterar
 	//se qty de philos = 1, esperar até dar o tempo de morte
-	while (philo_alive) // enquanto não morre
+	while (philo_alive && philo_args->number_of_times_must_eat) // enquanto não morre
 	{
 		if (philo_args->right_fork->status == FORK_NOT_AVAILABLE || philo_args->left_fork->status == FORK_NOT_AVAILABLE)
 		{
@@ -85,12 +85,16 @@ void	*routine(void *args)
 			continue ;
 		}
 		philo_eat(philo_args->number, philo_args->time_to_eat, philo_args);
+		philo_args->number_of_times_must_eat--;
+		if (!philo_args->number_of_times_must_eat)
+			break ;
 		philo_sleep(philo_args->number, philo_args->time_to_sleep, philo_args->init_tv);
 		philo_think(philo_args->number, philo_args->init_tv);
 		if (philo_args->is_first_philosopher)
 			usleep(philo_args->time_to_eat * 0.9 * 1000);
 		philo_alive--;
 	}
-	philo_die(philo_args->number, philo_args->init_tv);
+	if (!philo_alive)
+		philo_die(philo_args->number, philo_args->init_tv);
 	return ("bye");
 }

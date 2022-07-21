@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/07/20 21:57:14 by sguilher         ###   ########.fr        #
+#    Updated: 2022/07/21 00:00:10 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ $(OBJ_DIR):
 	mkdir -p $@
 
 run: $(NAME)
-	./$(NAME) 5 400 100 100
+	./$(NAME) 5 400 100 100 5
 
 leak:	all
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./$(NAME)

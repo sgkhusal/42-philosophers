@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 22:49:07 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:49:51 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int				handle_input(int argc, char *argv[]);
 
 t_fork			*create_forks(int number_of_forks);
 t_philo_args	*create_philosophers_args(int number_of_philosophers,
-					t_fork *forks, char *argv[]);
+					t_fork *forks, char *argv[], int argc);
 pthread_t		*create_philosophers(int number_of_philosophers,
 					t_philo_args *philosopher_args);
 void			join_philosophers(pthread_t *philosophers,
