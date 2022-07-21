@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 16:24:16 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/20 22:49:07 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <pthread.h> // threads
 # include <sys/time.h> // gettimeofday
 
-// philosophers activities
+// philosophers status
 # define EATING 1
 # define SLEEPING 2
 # define THINKING 3
@@ -35,6 +35,8 @@
 
 # define INT_MAX 2147483647
 
+# define NO 0
+# define YES 1
 # define OK 0
 # define FAILED 1
 # define IS_VALID 0
@@ -47,36 +49,35 @@
 //# define YELLOW "\033[1;33m"
 # define RESET "\033[0m"
 
-typedef struct s_data
+typedef struct s_fork
 {
-	int	*forks;
-	int	number_of_philosophers;
-}					t_data;
+	int				status;
+	pthread_mutex_t	mutex;
+}					t_fork;
 
-typedef struct s_philo_data
+typedef struct s_philo_args
 {
 	int				number;
-	int				*left_fork;
-	int				*right_fork;
-	int				is_last_philosopher; // ainda não usando
-	int				is_first_philosopher; // ainda não usando
-	int				must_eat; // ainda não usando
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_of_times_must_eat;
-	pthread_mutex_t	mutex;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
+	int				must_eat; // ainda não usando
+	int				is_last_philosopher; // ainda não usando
+	int				is_first_philosopher; // ainda não usando
 	struct timeval	init_tv;
-}				t_philo_data;
+}				t_philo_args;
 
 // check input
 int				handle_input(int argc, char *argv[]);
 
-int				*create_forks(int number_of_forks);
-t_philo_data	*init_philosopher_data(int number_of_philosophers, int *forks,
-					pthread_mutex_t mutex, char *argv[]);
+t_fork			*create_forks(int number_of_forks);
+t_philo_args	*create_philosophers_args(int number_of_philosophers,
+					t_fork *forks, char *argv[]);
 pthread_t		*create_philosophers(int number_of_philosophers,
-					t_philo_data *philosopher_data);
+					t_philo_args *philosopher_args);
 void			join_philosophers(pthread_t *philosophers,
 					int number_of_philosophers);
 

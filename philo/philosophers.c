@@ -6,55 +6,67 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 16:25:27 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/20 23:05:24 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	first_philo_data(t_philo_data *philo_data,
-	int philo_qty, int *forks, char *argv[])
+static void	fill_first_philo_args(t_philo_args *philo_args, int philo_qty,
+	t_fork *forks, char *argv[])
 {
-	philo_data[0].time_to_die = ft_atol(argv[2]);
-	philo_data[0].time_to_eat = ft_atol(argv[3]);
-	philo_data[0].time_to_sleep = ft_atol(argv[4]);
-	if (philo_qty != 1)
-		philo_data[0].left_fork = &forks[philo_qty - 1];
+	philo_args[0].number = 1;
+	philo_args[0].right_fork = &forks[0];
+	philo_args[0].time_to_die = ft_atol(argv[2]);
+	philo_args[0].time_to_eat = ft_atol(argv[3]);
+	philo_args[0].time_to_sleep = ft_atol(argv[4]);
+	philo_args[0].is_first_philosopher = YES;
+	philo_args[0].is_last_philosopher = NO;
+	if (philo_qty == 1)
+		philo_args[0].left_fork = NULL; // será que precisa??
 	else
-		philo_data[0].left_fork = NULL; // será que precisa??
+		philo_args[0].left_fork = &forks[philo_qty - 1];
 }
 
-t_philo_data	*init_philosopher_data(int number_of_philosophers,
-	int *forks, pthread_mutex_t mutex, char *argv[])
+static void	fill_philo_args(t_philo_args *philo_args,
+	int number_of_philosophers, t_fork *forks)
 {
-	t_philo_data	*philo_data;
-	int				i;
+	int	i;
 
-	philo_data = malloc(sizeof(t_philo_data) * number_of_philosophers);
-	if (philo_data == NULL)
-		return (NULL);
-	i = 0;
+	i = 1;
 	while (i < number_of_philosophers)
 	{
-		philo_data[i].number = i + 1;
-		philo_data[i].mutex = mutex;
-		philo_data[i].right_fork = &forks[i];
-		if (i == 0)
-			first_philo_data(philo_data, number_of_philosophers, forks, argv);
+		philo_args[i].number = i + 1;
+		philo_args[i].right_fork = &forks[i];
+		philo_args[i].left_fork = &forks[i - 1];
+		philo_args[i].time_to_die = philo_args[0].time_to_die;
+		philo_args[i].time_to_eat = philo_args[0].time_to_eat;
+		philo_args[i].time_to_sleep = philo_args[0].time_to_sleep;
+		philo_args[i].is_first_philosopher = NO;
+		if (i + 1 == number_of_philosophers)
+			philo_args[i].is_last_philosopher = YES;
 		else
-		{
-			philo_data[i].time_to_die = philo_data[i - 1].time_to_die;
-			philo_data[i].time_to_eat = philo_data[i - 1].time_to_eat;
-			philo_data[i].time_to_sleep = philo_data[i - 1].time_to_sleep;
-			philo_data[i].left_fork = &forks[i - 1];
-		}
+			philo_args[i].is_last_philosopher = NO;
 		i++;
 	}
-	return (philo_data);
+}
+
+t_philo_args	*create_philosophers_args(int number_of_philosophers,
+	t_fork *forks, char *argv[])
+{
+	t_philo_args	*philo_args;
+
+	philo_args = malloc(sizeof(t_philo_args) * number_of_philosophers);
+	if (philo_args == NULL)
+		return (NULL);
+	fill_first_philo_args(philo_args, number_of_philosophers, forks, argv);
+	if (number_of_philosophers > 1)
+		fill_philo_args(philo_args, number_of_philosophers, forks);
+	return (philo_args);
 }
 
 pthread_t	*create_philosophers(int number_of_philosophers,
-	t_philo_data *philosopher_data)
+	t_philo_args *philosopher_args)
 {
 	struct timeval	init_tv;
 	pthread_t		*philosophers;
@@ -67,9 +79,9 @@ pthread_t	*create_philosophers(int number_of_philosophers,
 	gettimeofday(&init_tv, NULL);
 	while (i < number_of_philosophers)
 	{
-		philosopher_data[i].init_tv = init_tv;
+		philosopher_args[i].init_tv = init_tv;
 		if (pthread_create(&philosophers[i], NULL, &routine,
-				(void *)&philosopher_data[i]) != 0)
+				(void *)&philosopher_args[i]) != 0)
 		{
 			printf("Error creating philosopher %i thread.\n", i + 1);
 			free (philosophers); // tá certo fazer isso?
