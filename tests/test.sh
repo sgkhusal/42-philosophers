@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/21 20:10:24 by sguilher          #+#    #+#              #
-#    Updated: 2022/07/22 01:54:07 by sguilher         ###   ########.fr        #
+#    Updated: 2022/07/22 18:23:41 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,9 +59,10 @@ echo "                                                                          
 
 for testfile in ${test_lists[*]}; do
 
-	printf $RED
-	echo ———————————— $testfile
-	printf $END
+	printf $LIGHT_BLUE
+	echo "************************************************"
+	echo "$testfile test"
+	printf "\n$END"
 
 	while read test; do
 		((i++))

@@ -6,33 +6,29 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:17:50 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/15 20:37:24 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/22 19:04:17 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	print_input_error_message(void)
+static void	print_input_error_message(void)
 {
 	printf(RED);
-	printf("Invalid number of arguments. ");
-	printf("To run philo use the following arguments:\n");
+	printf("Invalid number of arguments. Run:\n");
 	printf(BLUE);
-	printf("./philo [number_of_philosophers] [time_to_die] [time_to_eat] ");
-	printf("[time_to_sleep] [number_of_times_each_philosopher_must_eat]");
-	printf("(optional argument)\n");
+	printf("./philo [nbr_of_philosophers] [time_to_die] [time_to_eat] "
+		"[time_to_sleep] [nbr_of_times_each_philosopher_must_eat](optional)\n");
 	printf(RESET);
 }
 
-int	is_not_unsigned_int(char *str)
+static int	is_valid_number(char *str)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (str[i] && str[i] == '+')
+	if (str[i] && str[i] == '+')
 		i++;
-	j = i;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -40,38 +36,55 @@ int	is_not_unsigned_int(char *str)
 			printf(RED);
 			printf("invalid argument: %s: must be a positive integer\n", str);
 			printf(RESET);
-			return (IS_NOT_VALID);
+			return (NOT_VALID);
 		}
 		i++;
 	}
-	if (i - j > 11)
+	if (i > 11 || ft_atol(str) > INT_MAX)
 	{
 		printf(RED);
 		printf("invalid argument: %s: number too big\n", str);
 		printf(RESET);
-		return (IS_NOT_VALID);
+		return (NOT_VALID);
 	}
-	return (IS_VALID);
+	return (VALID);
 }
-// TODO: define if it is going to accept values with + and other input restrictions
 
-int	handle_input(int argc, char *argv[])
+static void	transform_input(int argc, char *argv[], t_input *input)
 {
-	int	input_status;
+	input->nbr_of_philos = ft_atoi(argv[1]);
+	input->time_to_die = ft_atoi(argv[2]);
+	input->time_to_eat = ft_atoi(argv[3]);
+	input->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		input->nbr_of_times_must_eat = ft_atoi(argv[5]);
+	else
+		input->nbr_of_times_must_eat = -1;
+}
+
+int	handle_input(int argc, char *argv[], t_input *input)
+{
 	int	i;
 
-	input_status = OK;
 	if (argc < 5 || argc > 6)
 	{
 		print_input_error_message();
-		input_status = FAILED;
+		return (FAILED);
+	}
+	if (ft_atoi(argv[1]) == 0)
+	{
+		printf(RED);
+		printf("Number of philosophers invalid.\n");
+		printf(RESET);
+		return (FAILED);
 	}
 	i = 1;
 	while (argv[i])
 	{
-		if (is_not_unsigned_int(argv[i]))
-			input_status = FAILED;
+		if (is_valid_number(argv[i]) == NOT_VALID)
+			return (FAILED);
 		i++;
 	}
-	return (input_status);
+	transform_input(argc, argv, input);
+	return (OK);
 }

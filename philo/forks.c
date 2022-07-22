@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 00:01:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 22:50:04 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/22 19:07:46 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_fork	*create_forks(int number_of_forks)
 {
-	int	i;
+	int		i;
 	t_fork	*forks;
 
 	i = 0;

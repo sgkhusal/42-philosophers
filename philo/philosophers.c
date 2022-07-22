@@ -6,109 +6,90 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/21 00:59:45 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:46:59 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	fill_first_philo_args(t_philo_args *philo_args, int philo_qty,
-	t_fork *forks, char *argv[])
+static void	set_philo_forks(t_philo_args *args, t_fork *forks, int index,
+	int nbr_of_philos)
 {
-	philo_args[0].number = 1;
-	philo_args[0].right_fork = &forks[0];
-	philo_args[0].time_to_die = ft_atol(argv[2]);
-	philo_args[0].time_to_eat = ft_atol(argv[3]);
-	philo_args[0].time_to_sleep = ft_atol(argv[4]);
-	philo_args[0].is_first_philosopher = YES;
-	philo_args[0].is_last_philosopher = NO;
-	if (philo_qty == 1)
-		philo_args[0].left_fork = NULL; // será que precisa??
+	args->right_fork = &forks[index];
+	if (index == 0 && nbr_of_philos == 1)
+		args->left_fork = NULL; // será que precisa??
+	else if (index == 0)
+		args->left_fork = &forks[nbr_of_philos - 1];
 	else
-		philo_args[0].left_fork = &forks[philo_qty - 1];
+		args->left_fork = &forks[index - 1];
 }
 
-static void	fill_philo_args(t_philo_args *philo_args,
-	int number_of_philosophers, t_fork *forks)
+t_philo_args	*create_philos_args(t_input input, t_fork *forks)
 {
-	int	i;
-
-	i = 1;
-	while (i < number_of_philosophers)
-	{
-		philo_args[i].number = i + 1;
-		philo_args[i].right_fork = &forks[i];
-		philo_args[i].left_fork = &forks[i - 1];
-		philo_args[i].time_to_die = philo_args[0].time_to_die;
-		philo_args[i].time_to_eat = philo_args[0].time_to_eat;
-		philo_args[i].time_to_sleep = philo_args[0].time_to_sleep;
-		philo_args[i].number_of_times_must_eat = philo_args[0].number_of_times_must_eat;
-		philo_args[i].is_first_philosopher = NO;
-		if (i + 1 == number_of_philosophers)
-			philo_args[i].is_last_philosopher = YES;
-		else
-			philo_args[i].is_last_philosopher = NO;
-		i++;
-	}
-}
-
-t_philo_args	*create_philosophers_args(int number_of_philosophers,
-	t_fork *forks, char *argv[], int argc)
-{
-	t_philo_args	*philo_args;
-
-	philo_args = malloc(sizeof(t_philo_args) * number_of_philosophers);
-	if (philo_args == NULL)
-		return (NULL);
-	fill_first_philo_args(philo_args, number_of_philosophers, forks, argv);
-	if (argc == 6)
-		philo_args[0].number_of_times_must_eat = ft_atol(argv[5]);
-	else
-		philo_args[0].number_of_times_must_eat = -1;
-	if (number_of_philosophers > 1)
-		fill_philo_args(philo_args, number_of_philosophers, forks);
-	return (philo_args);
-}
-
-pthread_t	*create_philosophers(int number_of_philosophers,
-	t_philo_args *philosopher_args)
-{
-	struct timeval	init_tv;
-	pthread_t		*philosophers;
+	t_philo_args	*args;
 	int				i;
 
-	philosophers = malloc(sizeof(pthread_t) * number_of_philosophers);
-	if (philosophers == NULL)
+	args = malloc(sizeof(t_philo_args) * input.nbr_of_philos);
+	if (args == NULL)
 		return (NULL);
 	i = 0;
-	//if (number_of_philosophers == 1)  // e se for == 0?? - assim como os outros parâmetros
-		// return criar a thread para um filósofo com a função específica
-	gettimeofday(&init_tv, NULL);
-	while (i < number_of_philosophers)
+	while (i < input.nbr_of_philos)
 	{
-		philosopher_args[i].init_tv = init_tv;
-		if (pthread_create(&philosophers[i], NULL, &routine,
-				(void *)&philosopher_args[i]) != 0)
+		args[i].nbr = i + 1;
+		args[i].time_to_die = input.time_to_die;
+		args[i].time_to_eat = input.time_to_eat;
+		args[i].time_to_sleep = input.time_to_sleep;
+		args[i].nbr_of_times_must_eat = input.nbr_of_times_must_eat;
+		args[i].is_first_philo = NO;
+		if (i == 0)
+			args[i].is_first_philo = YES;
+		args[i].is_last_philo = NO;
+		if (i + 1 == input.nbr_of_philos && i != 0) // ver se c 1 n pode mudar
+			args[i].is_last_philo = YES;
+		set_philo_forks(&args[i], forks, i, input.nbr_of_philos);
+		i++;
+	}
+	return (args);
+}
+
+pthread_t	*create_philos(int nbr_of_philos, t_philo_args *philo_args)
+{
+	struct timeval	init_tv;
+	pthread_t		*philos;
+	int				i;
+
+	philos = malloc(sizeof(pthread_t) * nbr_of_philos);
+	if (philos == NULL)
+		return (NULL);
+	i = 0;
+	gettimeofday(&init_tv, NULL);
+	//if (nbr_of_philos == 1)//e se for == 0?? - assim como os outros parâmetros
+		// return criar a thread para um filósofo com a função específica
+	while (i < nbr_of_philos)
+	{
+		philo_args[i].init_tv = init_tv;
+		if (pthread_create(&philos[i], NULL, &routine,
+				(void *)&philo_args[i]) != 0)
 		{
-			printf("Error creating philosopher %i thread.\n", i + 1);
-			free (philosophers); // tá certo fazer isso?
-			philosophers = NULL;
-			i = number_of_philosophers;
+			printf("Error creating philo %i thread.\n", i + 1);
+			free (philos);// tá certo fazer isso, sem esperar as outras threads?
+			philos = NULL;
+			i = nbr_of_philos;
 		}
 		i++;
 	}
-	return (philosophers);
+	return (philos);
 }
 
-void	join_philosophers(pthread_t *philosophers, int number_of_philosophers)
+void	join_philos(pthread_t *philos, int nbr_of_philos)
 {
 	int	i;
 
 	i = 0;
-	while (i < number_of_philosophers)
+	while (i < nbr_of_philos)
 	{
-		if (pthread_join(philosophers[i], NULL) != 0)
-			printf("Error join philosopher %i thread.\n", i + 1);
+		if (pthread_join(philos[i], NULL) != 0)
+			printf("Error join philo %i thread.\n", i + 1);
 		i++;
 	}
 }

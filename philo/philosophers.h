@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/20 23:49:51 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/22 18:48:15 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # define YES 1
 # define OK 0
 # define FAILED 1
-# define IS_VALID 0
-# define IS_NOT_VALID 1
+# define VALID 1
+# define NOT_VALID 0
 
 // colors
 //# define GREEN "\033[0;32m"
@@ -48,6 +48,15 @@
 # define BLUE "\033[38;2;34;183;235m"
 //# define YELLOW "\033[1;33m"
 # define RESET "\033[0m"
+
+typedef struct s_input
+{
+	int	nbr_of_philos;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	nbr_of_times_must_eat;
+}				t_input;
 
 typedef struct s_fork
 {
@@ -57,29 +66,27 @@ typedef struct s_fork
 
 typedef struct s_philo_args
 {
-	int				number;
+	int				nbr;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				number_of_times_must_eat;
+	int				nbr_of_times_must_eat;
+	int				must_eat; // ainda não usando
+	int				is_last_philo; // ainda não usando
+	int				is_first_philo; // ainda não usando
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	int				must_eat; // ainda não usando
-	int				is_last_philosopher; // ainda não usando
-	int				is_first_philosopher; // ainda não usando
 	struct timeval	init_tv;
 }				t_philo_args;
 
 // check input
-int				handle_input(int argc, char *argv[]);
+int				handle_input(int argc, char *argv[], t_input *input);
 
-t_fork			*create_forks(int number_of_forks);
-t_philo_args	*create_philosophers_args(int number_of_philosophers,
-					t_fork *forks, char *argv[], int argc);
-pthread_t		*create_philosophers(int number_of_philosophers,
-					t_philo_args *philosopher_args);
-void			join_philosophers(pthread_t *philosophers,
-					int number_of_philosophers);
+t_fork			*create_forks(int nbr_of_forks);
+t_philo_args	*create_philos_args(t_input input, t_fork *forks);
+pthread_t		*create_philos(int nbr_of_philos, t_philo_args *philo_args);
+void			join_philos(pthread_t *philos,
+					int nbr_of_philos);
 
 // actions
 void			*routine(void *arg);
@@ -90,6 +97,7 @@ void			time_wait(int time, struct timeval tv);
 
 // utils
 int				ft_isdigit(int c);
+int				ft_atoi(const char *nptr);
 long int		ft_atol(const char *nptr);
 
 #endif

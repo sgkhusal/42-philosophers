@@ -1,5 +1,5 @@
 # exec
-philo
+#philo
 philo_bonus
 *.out
 
@@ -8,3 +8,5 @@ obj
 *.o
 
 .vscode
+test
+outfiles

@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:57:12 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/21 00:48:54 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/22 19:09:47 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 int	main(int argc, char *argv[])
 {
-	t_philo_args	*philosophers_args;
-	pthread_t		*philosophers;
+	t_philo_args	*philos_args;
+	pthread_t		*philos;
 	t_fork			*forks;
-	int				number_of_philosophers;
+	t_input			input;
 
-	if (handle_input(argc, argv) == FAILED)
+	if (handle_input(argc, argv, &input) == FAILED)
 		return (E_INVAL);
-	number_of_philosophers = ft_atol(argv[1]);
-	forks = create_forks(number_of_philosophers);
+	forks = create_forks(input.nbr_of_philos);
 	if (forks == NULL)
 		return (E_MALLOC);
-	philosophers_args = create_philosophers_args(number_of_philosophers,
-			forks, argv, argc);
-	if (philosophers_args == NULL)
-		return (E_MALLOC); // must clean
-	philosophers = create_philosophers(number_of_philosophers,
-			philosophers_args);
-	if (philosophers == NULL)
-		return (E_MALLOC); // must clean
-	join_philosophers(philosophers, number_of_philosophers);
+	philos_args = create_philos_args(input, forks);
+	if (philos_args == NULL)
+		return (E_MALLOC); // must clean forks
+	philos = create_philos(input.nbr_of_philos, philos_args);
+	if (philos == NULL)
+		return (E_MALLOC); // must clean forks and philo_args
+	join_philos(philos, input.nbr_of_philos);
+	// verificar se algum problema nos joins
 	// se algum filósofo morre tem que retornar algum erro?
 	// como parar o programa se algum filósofo morre?
+	// limpar forks, philos, philos_args
 	return (0);
 }
+
+// casos para testar:
+// tempos = 0
