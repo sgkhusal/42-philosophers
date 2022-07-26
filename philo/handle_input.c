@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:17:50 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/22 19:04:17 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:58:25 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	print_input_error_message(void)
 	printf(RESET);
 }
 
-static int	is_valid_number(char *str)
+static int	check_valid_number(char *str)
 {
 	int	i;
 
@@ -74,14 +74,14 @@ int	handle_input(int argc, char *argv[], t_input *input)
 	if (ft_atoi(argv[1]) == 0)
 	{
 		printf(RED);
-		printf("Number of philosophers invalid.\n");
+		printf("Invalid number of philosophers.\n");
 		printf(RESET);
 		return (FAILED);
 	}
 	i = 1;
 	while (argv[i])
 	{
-		if (is_valid_number(argv[i]) == NOT_VALID)
+		if (check_valid_number(argv[i]) == NOT_VALID)
 			return (FAILED);
 		i++;
 	}

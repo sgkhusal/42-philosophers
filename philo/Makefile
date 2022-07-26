@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/07/22 18:09:47 by sguilher         ###   ########.fr        #
+#    Updated: 2022/07/26 18:40:15 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME	=	philo
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -g -pthread
 
-SRC		=	main.c handle_input.c forks.c philosophers.c actions.c time.c $(UTILS)
-UTILS	=	utils.c
+SRC		=	main.c handle_input.c forks.c philosophers.c routine.c actions.c \
+			$(UTILS)
+UTILS	=	time.c utils.c
 HEADER	=	philosophers.h
 
 OBJ_DIR	=	obj
@@ -65,7 +66,7 @@ leak:	all
 	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./$(NAME)
 
 test:	all
-	cd minishell_tester && ./tester
+	cd ../tests && ./test.sh
 
 clean:
 	@rm -rf $(OBJ_DIR)

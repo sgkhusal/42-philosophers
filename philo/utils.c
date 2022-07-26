@@ -6,9 +6,17 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:42:29 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/22 18:32:24 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/26 18:25:19 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philosophers.h"
+
+void	*malloc_error(void)
+{
+	write(2, "Malloc error.\n", 15);
+	return (NULL);
+}
 
 int	ft_isdigit(int c)
 {

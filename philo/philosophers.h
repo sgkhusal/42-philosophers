@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/22 18:48:15 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/26 18:44:23 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_fork
 	pthread_mutex_t	mutex;
 }					t_fork;
 
-typedef struct s_philo_args
+typedef struct s_args
 {
 	int				nbr;
 	int				time_to_die;
@@ -77,27 +77,32 @@ typedef struct s_philo_args
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	struct timeval	init_tv;
-}				t_philo_args;
+}				t_args;
 
 // check input
-int				handle_input(int argc, char *argv[], t_input *input);
+int			handle_input(int argc, char *argv[], t_input *input);
 
-t_fork			*create_forks(int nbr_of_forks);
-t_philo_args	*create_philos_args(t_input input, t_fork *forks);
-pthread_t		*create_philos(int nbr_of_philos, t_philo_args *philo_args);
-void			join_philos(pthread_t *philos,
-					int nbr_of_philos);
+// threads
+pthread_t	*create_philos(int nbr_of_philos, t_args *args);
+t_args		*create_args(t_input input, t_fork *forks);
+t_fork		*create_forks(int nbr_of_forks);
+void		*routine(void *arg);
+void		join_philos(pthread_t *philos, int nbr_of_philos);
 
-// actions
-void			*routine(void *arg);
+// philosopher's actions
+void		philo_eat(int philo, int time_to_eat, t_args *args);
+void		philo_sleep(int philo, int time_to_spleep, struct timeval init_tv);
+void		philo_think(int philo, struct timeval init_tv);
+void		philo_die(int philo, struct timeval init_tv);
 
 // time
-double			get_delta_time(struct timeval init_tv);
-void			time_wait(int time, struct timeval tv);
+double		get_delta_time(struct timeval init_tv);
+void		time_wait(int time, struct timeval tv);
 
 // utils
-int				ft_isdigit(int c);
-int				ft_atoi(const char *nptr);
-long int		ft_atol(const char *nptr);
+int			ft_isdigit(int c);
+int			ft_atoi(const char *nptr);
+long int	ft_atol(const char *nptr); //
+void		*malloc_error(void);
 
 #endif

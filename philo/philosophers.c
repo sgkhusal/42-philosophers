@@ -6,13 +6,13 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/22 18:46:59 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/26 18:32:38 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	set_philo_forks(t_philo_args *args, t_fork *forks, int index,
+static void	set_philo_forks(t_args *args, t_fork *forks, int index,
 	int nbr_of_philos)
 {
 	args->right_fork = &forks[index];
@@ -24,14 +24,14 @@ static void	set_philo_forks(t_philo_args *args, t_fork *forks, int index,
 		args->left_fork = &forks[index - 1];
 }
 
-t_philo_args	*create_philos_args(t_input input, t_fork *forks)
+t_args	*create_args(t_input input, t_fork *forks)
 {
-	t_philo_args	*args;
-	int				i;
+	t_args	*args;
+	int		i;
 
-	args = malloc(sizeof(t_philo_args) * input.nbr_of_philos);
+	args = malloc(sizeof(t_args) * input.nbr_of_philos);
 	if (args == NULL)
-		return (NULL);
+		return (malloc_error());
 	i = 0;
 	while (i < input.nbr_of_philos)
 	{
@@ -52,7 +52,7 @@ t_philo_args	*create_philos_args(t_input input, t_fork *forks)
 	return (args);
 }
 
-pthread_t	*create_philos(int nbr_of_philos, t_philo_args *philo_args)
+pthread_t	*create_philos(int nbr_of_philos, t_args *args)
 {
 	struct timeval	init_tv;
 	pthread_t		*philos;
@@ -60,21 +60,19 @@ pthread_t	*create_philos(int nbr_of_philos, t_philo_args *philo_args)
 
 	philos = malloc(sizeof(pthread_t) * nbr_of_philos);
 	if (philos == NULL)
-		return (NULL);
+		return (malloc_error());
 	i = 0;
 	gettimeofday(&init_tv, NULL);
-	//if (nbr_of_philos == 1)//e se for == 0?? - assim como os outros parâmetros
+	//if (nbr_of_philos == 1)
 		// return criar a thread para um filósofo com a função específica
 	while (i < nbr_of_philos)
 	{
-		philo_args[i].init_tv = init_tv;
-		if (pthread_create(&philos[i], NULL, &routine,
-				(void *)&philo_args[i]) != 0)
+		args[i].init_tv = init_tv;
+		if (pthread_create(&philos[i], NULL, &routine, (void *)&args[i]) != 0)
 		{
 			printf("Error creating philo %i thread.\n", i + 1);
 			free (philos);// tá certo fazer isso, sem esperar as outras threads?
-			philos = NULL;
-			i = nbr_of_philos;
+			return (NULL);
 		}
 		i++;
 	}

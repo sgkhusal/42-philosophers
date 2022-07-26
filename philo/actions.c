@@ -6,13 +6,13 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/22 19:12:32 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/26 18:38:59 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	philo_eat(int philo, int time_to_eat, t_philo_args *args)
+void	philo_eat(int philo, int time_to_eat, t_args *args)
 {
 	double			delta_time;
 	struct timeval	tv;
@@ -48,7 +48,7 @@ void	philo_sleep(int philo, int time_to_spleep, struct timeval init_tv)
 
 void	philo_think(int philo, struct timeval init_tv)
 {
-	double			delta_time;
+	double	delta_time;
 
 	delta_time = get_delta_time(init_tv);
 	printf("%f %i is thinking\n", delta_time, philo);
@@ -57,63 +57,8 @@ void	philo_think(int philo, struct timeval init_tv)
 
 void	philo_die(int philo, struct timeval init_tv)
 {
-	double			delta_time;
+	double	delta_time;
 
 	delta_time = get_delta_time(init_tv);
 	printf("%f %i died\n", delta_time, philo);
-}
-
-void	*only_one_philo(t_fork *right_fork, int time_to_die, struct timeval init_tv)
-{
-	double			delta_time;
-
-	pthread_mutex_lock(&(right_fork->mutex));
-	right_fork->status = FORK_NOT_AVAILABLE;
-	delta_time = get_delta_time(init_tv);
-	printf("%f 1 has taken a fork\n", delta_time);
-	time_wait(time_to_die, init_tv);
-	philo_die(1, init_tv);
-	pthread_mutex_unlock(&(right_fork->mutex));
-	return ("died");
-}
-
-// TODO: lidar com os deltas ts == 0!!
-void	*routine(void *args)
-{
-	t_philo_args	*philo_args;
-	int				philo_alive;
-
-	philo_args = (t_philo_args *)args;
-	if (philo_args->left_fork == NULL) // pode passar para uma rotina diferente
-		return (only_one_philo(philo_args->right_fork, philo_args->time_to_die, philo_args->init_tv));
-	if (philo_args->nbr % 2 == 0)
-		usleep(philo_args->time_to_eat * 0.9 * 1000); // verificar um valor bom
-	if (philo_args->nbr % 2 == 1 && philo_args->is_last_philo)
-		usleep(philo_args->time_to_eat * 1.9 * 1000); // verificar um valor bom
-	philo_alive = 10; // alterar
-	while (philo_alive && philo_args->nbr_of_times_must_eat) // enquanto não morre
-	{
-		if (philo_args->right_fork->status == FORK_NOT_AVAILABLE || philo_args->left_fork->status == FORK_NOT_AVAILABLE)
-		{
-			// checar se o philosofo morre
-			// printf("philo %i is waiting\n", philo_args->nbr);
-			//usleep(100); // talvez seja útil se todos começarem a morrer
-			continue ;
-		}
-		philo_eat(philo_args->nbr, philo_args->time_to_eat, philo_args);
-		philo_args->nbr_of_times_must_eat--;
-		if (!philo_args->nbr_of_times_must_eat)
-			break ;
-		philo_sleep(philo_args->nbr, philo_args->time_to_sleep, philo_args->init_tv);
-		philo_think(philo_args->nbr, philo_args->init_tv);
-		if (philo_args->is_first_philo)
-			usleep(philo_args->time_to_eat * 0.9 * 1000);
-		philo_alive--;
-	}
-	if (!philo_alive)
-	{
-		philo_die(philo_args->nbr, philo_args->init_tv);
-		return ("died");
-	}
-	return ("bye");
 }
