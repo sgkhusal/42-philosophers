@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 18:38:36 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/27 16:27:21 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:33:54 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	*only_one_philo_routine(void *philo_args)
 {
-	double	delta_time;
-	t_args	*args;
+	long long	delta_time;
+	t_args		*args;
 
 	args = (t_args *)philo_args;
 
 	pthread_mutex_lock(&(args->right_fork->mutex));
 	args->right_fork->status = FORK_NOT_AVAILABLE;
 	delta_time = get_delta_time(args->init_tv);
-	printf("%f 1 has taken a fork\n", delta_time);
+	printf("%lld 1 has taken a fork\n", delta_time);
 	time_wait(args->time_to_die, args->init_tv);
 	philo_die(1, args->init_tv);
 	pthread_mutex_unlock(&(args->right_fork->mutex));

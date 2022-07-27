@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/27 15:09:50 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:32:47 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		philo_think(int philo, struct timeval init_tv);
 void		philo_die(int philo, struct timeval init_tv);
 
 // time
-double		get_delta_time(struct timeval init_tv);
+long long	get_delta_time(struct timeval init_tv);
 void		time_wait(int time, struct timeval tv);
 
 // utils
