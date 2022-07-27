@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/26 18:44:23 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/27 15:09:50 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ typedef struct s_input
 {
 	int	nbr_of_philos;
 	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
+	int	time_eating;
+	int	time_sleeping;
 	int	nbr_of_times_must_eat;
 }				t_input;
 
@@ -67,13 +67,15 @@ typedef struct s_fork
 typedef struct s_args
 {
 	int				nbr;
+	int				nbr_of_philos;
 	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	int				time_eating;
+	int				time_sleeping;
 	int				nbr_of_times_must_eat;
 	int				must_eat; // ainda não usando
 	int				is_last_philo; // ainda não usando
 	int				is_first_philo; // ainda não usando
+	int				**order;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	struct timeval	init_tv;
@@ -83,14 +85,16 @@ typedef struct s_args
 int			handle_input(int argc, char *argv[], t_input *input);
 
 // threads
-pthread_t	*create_philos(int nbr_of_philos, t_args *args);
-t_args		*create_args(t_input input, t_fork *forks);
+int			**create_matrix_order(int nbr_of_philos);
 t_fork		*create_forks(int nbr_of_forks);
+t_args		*create_args(t_input input, t_fork *forks, int **order);
+pthread_t	*create_philos(int nbr_of_philos, t_args *args);
 void		*routine(void *arg);
+void		*only_one_philo_routine(void *philo_args);
 void		join_philos(pthread_t *philos, int nbr_of_philos);
 
 // philosopher's actions
-void		philo_eat(int philo, int time_to_eat, t_args *args);
+void		philo_eat(int philo, int time_eating, t_args *args);
 void		philo_sleep(int philo, int time_to_spleep, struct timeval init_tv);
 void		philo_think(int philo, struct timeval init_tv);
 void		philo_die(int philo, struct timeval init_tv);
@@ -104,5 +108,6 @@ int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
 long int	ft_atol(const char *nptr); //
 void		*malloc_error(void);
+void		*pthread_error(pthread_t *philos, int philo_nbr);
 
 #endif

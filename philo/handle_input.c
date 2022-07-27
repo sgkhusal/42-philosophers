@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:17:50 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/26 16:58:25 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/27 00:19:46 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	print_input_error_message(void)
 	printf(RED);
 	printf("Invalid number of arguments. Run:\n");
 	printf(BLUE);
-	printf("./philo [nbr_of_philosophers] [time_to_die] [time_to_eat] "
-		"[time_to_sleep] [nbr_of_times_each_philosopher_must_eat](optional)\n");
+	printf("./philo [nbr_of_philosophers] [time_to_die] [time_eating] "
+		"[time_sleeping] [nbr_of_times_each_philosopher_must_eat](optional)\n");
 	printf(RESET);
 }
 
@@ -54,8 +54,8 @@ static void	transform_input(int argc, char *argv[], t_input *input)
 {
 	input->nbr_of_philos = ft_atoi(argv[1]);
 	input->time_to_die = ft_atoi(argv[2]);
-	input->time_to_eat = ft_atoi(argv[3]);
-	input->time_to_sleep = ft_atoi(argv[4]);
+	input->time_eating = ft_atoi(argv[3]);
+	input->time_sleeping = ft_atoi(argv[4]);
 	if (argc == 6)
 		input->nbr_of_times_must_eat = ft_atoi(argv[5]);
 	else
@@ -71,7 +71,7 @@ int	handle_input(int argc, char *argv[], t_input *input)
 		print_input_error_message();
 		return (FAILED);
 	}
-	if (ft_atoi(argv[1]) == 0)
+	if (ft_atoi(argv[1]) <= 0)
 	{
 		printf(RED);
 		printf("Invalid number of philosophers.\n");

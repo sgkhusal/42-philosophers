@@ -6,13 +6,13 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/26 18:38:59 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/26 22:52:24 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	philo_eat(int philo, int time_to_eat, t_args *args)
+void	philo_eat(int philo, int time_eating, t_args *args)
 {
 	double			delta_time;
 	struct timeval	tv;
@@ -28,7 +28,7 @@ void	philo_eat(int philo, int time_to_eat, t_args *args)
 	printf("%f %i has taken a fork\n", delta_time, philo);
 	delta_time = get_delta_time(args->init_tv);
 	printf("%f %i is eating\n", delta_time, philo);
-	time_wait(time_to_eat, tv);
+	time_wait(time_eating, tv);
 	args->right_fork->status = FORK_AVAILABLE;
 	args->left_fork->status = FORK_AVAILABLE;
 	pthread_mutex_unlock(&(args->right_fork->mutex));
