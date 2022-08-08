@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:57:12 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/08 10:55:03 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:00:30 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char *argv[])
 	t_args		*args;
 	t_input		input;
 	int			**order;
+	pthread_mutex_t	print;
 
 	if (handle_input(argc, argv, &input) == FAILED)
 		return (E_INVAL);
@@ -46,7 +47,7 @@ int	main(int argc, char *argv[])
 	forks = create_forks(input.nbr_of_philos);
 	if (forks == NULL)
 		return (E_MALLOC);
-	args = create_args(input, forks, order);
+	args = create_args(input, forks, order, &print);
 	if (args == NULL)
 		return (E_MALLOC); // must clean forks
 	philos = create_philos(input.nbr_of_philos, args);
@@ -57,7 +58,6 @@ int	main(int argc, char *argv[])
 	// se algum filósofo morre tem que retornar algum erro?
 	// como parar o programa se algum filósofo morre?
 	// limpar forks, philos, args
-	printf("End\n");
 	return (0);
 }
 

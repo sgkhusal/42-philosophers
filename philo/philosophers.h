@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/08 10:52:14 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:02:27 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,9 @@
 # include <pthread.h> // threads
 # include <sys/time.h> // gettimeofday
 
-// philosophers status
-# define EATING 1
-# define SLEEPING 2
-# define THINKING 3
-# define DIED 0
+// simulation status
 # define STOP 0
 # define CONTINUE 1
-
-# define FORK_AVAILABLE 1
-# define FORK_NOT_AVAILABLE 0
 
 // error numbers
 # define E_INVAL 22
@@ -60,31 +53,30 @@ typedef struct s_time
 
 typedef struct s_input
 {
-	int		nbr_of_philos;
-	int		nbr_of_times_must_eat;
-	t_time	time;
+	int			nbr_of_philos;
+	long int	nbr_of_times_must_eat;
+	t_time		time;
 }				t_input;
 
 typedef struct s_fork
 {
-	int				status;
+	int				available;
 	pthread_mutex_t	mutex;
 }					t_fork;
 
 typedef struct s_args
 {
 	int				nbr;
-	t_input			input;
-	int				must_eat; // ainda não usando
-	int				is_last_philo; // ainda não usando
-	int				is_first_philo; // ainda não usando
-	int				*status; // se morreu
+	int				total_philos;
+	t_time			time;
+	int				must_eat;
+	int				*died; // se morreu
 	int				*simulation;
 	int				**order;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	long long		last_time_eating;
-	long long		next_time_eating;
+	unsigned long	last_time_eating; //
+	unsigned long	next_time_eating;
 	pthread_mutex_t	*print;
 	struct timeval	init_time;
 }				t_args;
@@ -95,17 +87,17 @@ int			handle_input(int argc, char *argv[], t_input *input);
 // threads
 int			**create_matrix_order(int nbr_of_philos);
 t_fork		*create_forks(int nbr_of_forks);
-t_args		*create_args(t_input input, t_fork *forks, int **order);
+t_args		*create_args(t_input input, t_fork *forks, int **order, pthread_mutex_t *print);
 pthread_t	*create_philos(int nbr_of_philos, t_args *args);
 void		*routine(void *arg);
 void		*only_one_philo_routine(void *philo_args);
 void		join_philos(pthread_t *philos, int nbr_of_philos);
 
 // philosopher's actions
-void		philo_eat(int philo, int time_eating, t_args *args);
-void		philo_sleep(int philo, int time_to_spleep, struct timeval init_tv);
-void		philo_think(int philo, struct timeval init_tv);
-void		philo_die(int philo, struct timeval init_tv);
+void		philo_eats(int philo, int time_eating, t_args *args);
+void		philo_sleeps(int philo, int time_to_spleep, struct timeval init_tv, pthread_mutex_t *print);
+void		philo_thinks(int philo, struct timeval init_tv, pthread_mutex_t *print);
+void		philo_dies(int philo, struct timeval init_tv, pthread_mutex_t *print);
 
 // time
 long long	get_delta_time(struct timeval init_tv);
@@ -117,5 +109,7 @@ int			ft_atoi(const char *nptr);
 long int	ft_atol(const char *nptr); //
 void		*malloc_error(void);
 void		*pthread_error(pthread_t *philos, int philo_nbr);
+void		print_action(long long time, int philo, char *action,
+				pthread_mutex_t *print);
 
 #endif

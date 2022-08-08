@@ -3,12 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:42:29 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/26 20:11:27 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/08 14:11:46 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philosophers.h"
+
+void	print_action(long long time, int philo, char *action,
+			pthread_mutex_t *print)
+{
+	pthread_mutex_lock(print);
+	printf("%-5lld %i %s\n", time, philo, action);
+	pthread_mutex_unlock(print);
+}
 
 int	ft_isdigit(int c)
 {

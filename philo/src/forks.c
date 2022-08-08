@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 00:01:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/26 18:29:19 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/08 12:11:33 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_fork	*create_forks(int number_of_forks)
 		return (malloc_error());
 	while (i < number_of_forks)
 	{
-		forks[i].status = FORK_AVAILABLE;
+		forks[i].available = YES;
 		i++;
 	}
 	return (forks);

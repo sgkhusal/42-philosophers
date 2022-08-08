@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 02:03:19 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/27 02:03:58 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/08 11:51:30 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ int	**create_matrix_order(int nbr_of_philos)
 		i++;
 	}
 	i = 0;
-	if (nbr_of_philos % 2 == 0)
+	if (nbr_of_philos == 1)
+		order[0][0] = 1;
+	else if (nbr_of_philos % 2 == 0)
 		fill_even_matrix_order(order, nbr_of_philos);
 	else
 		fill_odd_matrix_order(order, nbr_of_philos);

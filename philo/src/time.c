@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:05:58 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/27 23:38:31 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/08 11:41:46 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 long long	get_delta_time(struct timeval init_tv)
 {
 	struct timeval	tv;
+	long long		previous;
+	long long		now;
 	//long long		delta_time;
-	long long previous;
-	long long now;
 
 	previous = (init_tv.tv_sec * 1000) + (init_tv.tv_usec / 1000);
 	gettimeofday(&tv, NULL);
