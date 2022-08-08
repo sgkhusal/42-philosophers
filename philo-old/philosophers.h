@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/08 10:52:14 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:32:47 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdio.h> // printf
 # include <stdlib.h> // malloc, free
-# include <string.h> // memset - ainda não usando ///////////////
+# include <string.h> // memset
 # include <pthread.h> // threads
 # include <sys/time.h> // gettimeofday
 
@@ -25,8 +25,6 @@
 # define SLEEPING 2
 # define THINKING 3
 # define DIED 0
-# define STOP 0
-# define CONTINUE 1
 
 # define FORK_AVAILABLE 1
 # define FORK_NOT_AVAILABLE 0
@@ -51,18 +49,13 @@
 //# define YELLOW "\033[1;33m"
 # define RESET "\033[0m"
 
-typedef struct s_time
-{
-	int	to_die;
-	int	eating;
-	int	sleeping;
-}				t_time;
-
 typedef struct s_input
 {
-	int		nbr_of_philos;
-	int		nbr_of_times_must_eat;
-	t_time	time;
+	int	nbr_of_philos;
+	int	time_to_die;
+	int	time_eating;
+	int	time_sleeping;
+	int	nbr_of_times_must_eat;
 }				t_input;
 
 typedef struct s_fork
@@ -74,19 +67,18 @@ typedef struct s_fork
 typedef struct s_args
 {
 	int				nbr;
-	t_input			input;
+	int				nbr_of_philos;
+	int				time_to_die;
+	int				time_eating;
+	int				time_sleeping;
+	int				nbr_of_times_must_eat;
 	int				must_eat; // ainda não usando
 	int				is_last_philo; // ainda não usando
 	int				is_first_philo; // ainda não usando
-	int				*status; // se morreu
-	int				*simulation;
 	int				**order;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	long long		last_time_eating;
-	long long		next_time_eating;
-	pthread_mutex_t	*print;
-	struct timeval	init_time;
+	struct timeval	init_tv;
 }				t_args;
 
 // check input

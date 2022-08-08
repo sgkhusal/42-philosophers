@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+         #
+#    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/08 10:47:27 by sguilher         ###   ########.fr        #
+#    Updated: 2022/07/27 15:17:36 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ NAME	=	philo
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -g -pthread
 
-SRC_DIR	=	src
-SRC		=	main.c handle_input.c forks.c args.c philosophers.c routine.c actions.c \
+SRC		=	main.c handle_input.c forks.c philosophers.c routine.c actions.c \
 			$(UTILS)
 UTILS	=	order.c time.c error.c utils.c
 HEADER	=	philosophers.h
@@ -25,6 +24,11 @@ OBJ		=	$(SRC:%.c=$(OBJ_DIR)/%.o)
 
 VPATH	=	src
 INCLUDE	=	-I ./ -I ./includes
+
+# Bonus
+BONUS = philo_bonus
+SRC_BONUS = $(MAIN)
+OBJ_BONUS = $(SRC_BONUS:%.c=$(OBJ_DIR)/%.o)
 
 # **************************************************************************** #
 # rules
@@ -38,6 +42,14 @@ $(NAME): $(OBJ_DIR) $(OBJ)
 	@echo "\033[1;32m"
 	@echo "************************************"
 	@echo "           philo created"
+	@echo "************************************"
+	@echo "\033[0m"
+
+$(BONUS): $(OBJ_DIR) $(OBJ_BONUS)
+	$(CC) $(CFLAGS) $(OBJ_BONUS) -o $@
+	@echo "\033[1;32m"
+	@echo "************************************"
+	@echo "         philo_bonus created"
 	@echo "************************************"
 	@echo "\033[0m"
 
