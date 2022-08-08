@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 18:38:36 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/27 23:33:54 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/01 17:43:05 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*only_one_philo_routine(void *philo_args)
 	time_wait(args->time_to_die, args->init_tv);
 	philo_die(1, args->init_tv);
 	pthread_mutex_unlock(&(args->right_fork->mutex));
-	return ("died"); // mudar retorno
+	return (philo_args);
 }
 
 int	preparation(t_args args)
@@ -97,7 +97,7 @@ void	*routine(void *philo_args)
 		philo_die(args->nbr, args->init_tv);
 		return ("died");
 	}
-	return ("bye");
+	return (philo_args);
 }
 
 // criar uma nova rotina, levando em conta o tempo para comer
