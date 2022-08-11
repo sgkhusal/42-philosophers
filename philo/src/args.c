@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:42:53 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 15:50:31 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:22:59 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_args	*create_args(t_data *data, t_fork *forks)
 		else
 			args[i].next_eat = 2 * data->time.eating;
 		args[i].last_eat = 0;
+		pthread_mutex_init(&(args[i].lock_philo), NULL);
 		i++;
 	}
 	return (args);

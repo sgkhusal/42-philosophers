@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 15:54:59 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 16:22:05 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,15 @@ typedef struct s_data
 
 typedef struct s_args
 {
-	int			nbr;
-	int			must_eat;
+	int				nbr;
+	int				must_eat;
 	//int			iteration;
-	t_data		*data;
-	t_fork		*left_fork;
-	t_fork		*right_fork;
-	long long	last_eat; //
-	long long	next_eat;
+	t_data			*data;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
+	long long		last_eat; //
+	long long		next_eat;
+	pthread_mutex_t	lock_philo;
 }				t_args;
 
 // input
