@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 15:54:59 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/07/27 23:32:47 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@
 # include <unistd.h>
 # include <stdio.h> // printf
 # include <stdlib.h> // malloc, free
-# include <string.h> // memset - ainda não usando ///////////////
+# include <string.h> // memset
 # include <pthread.h> // threads
 # include <sys/time.h> // gettimeofday
 
-// simulation status
-# define STOP 0
-# define CONTINUE 1
+// philosophers status
+# define EATING 1
+# define SLEEPING 2
+# define THINKING 3
+# define DIED 0
+
+# define FORK_AVAILABLE 1
+# define FORK_NOT_AVAILABLE 0
 
 // error numbers
 # define E_INVAL 22
@@ -44,69 +49,59 @@
 //# define YELLOW "\033[1;33m"
 # define RESET "\033[0m"
 
-typedef struct s_time
+typedef struct s_input
 {
-	int	to_die;
-	int	eating;
-	int	sleeping;
-}				t_time;
+	int	nbr_of_philos;
+	int	time_to_die;
+	int	time_eating;
+	int	time_sleeping;
+	int	nbr_of_times_must_eat;
+}				t_input;
 
 typedef struct s_fork
 {
-	int				available;
-	pthread_mutex_t	lock;
+	int				status;
+	pthread_mutex_t	mutex;
 }					t_fork;
-
-typedef struct s_data
-{
-	int				nbr_of_philos;
-	int				nbr_of_times_must_eat;
-	int				simulation;
-	int				**order;
-	t_time			time;
-	long long		starting_time;
-	pthread_mutex_t	lock_print;
-	pthread_mutex_t	lock_data;
-}					t_data;
 
 typedef struct s_args
 {
-	int			nbr;
-	int			must_eat;
-	//int			iteration;
-	t_data		*data;
-	t_fork		*left_fork;
-	t_fork		*right_fork;
-	long long	last_eat; //
-	long long	next_eat;
+	int				nbr;
+	int				nbr_of_philos;
+	int				time_to_die;
+	int				time_eating;
+	int				time_sleeping;
+	int				nbr_of_times_must_eat;
+	int				must_eat; // ainda não usando
+	int				is_last_philo; // ainda não usando
+	int				is_first_philo; // ainda não usando
+	int				**order;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
+	struct timeval	init_tv;
 }				t_args;
 
-// input
-int			handle_input(int argc, char *argv[], t_data *input);
-void		fill_data(t_data *data);
+// check input
+int			handle_input(int argc, char *argv[], t_input *input);
 
 // threads
+int			**create_matrix_order(int nbr_of_philos);
 t_fork		*create_forks(int nbr_of_forks);
-t_args		*create_args(t_data *data, t_fork *forks);
+t_args		*create_args(t_input input, t_fork *forks, int **order);
 pthread_t	*create_philos(int nbr_of_philos, t_args *args);
 void		*routine(void *arg);
-int			simulation(t_args *philo);
 void		*only_one_philo_routine(void *philo_args);
 void		join_philos(pthread_t *philos, int nbr_of_philos);
 
 // philosopher's actions
-void		philo_eats(int philo, int time_eating, t_args *args);
-void		philo_sleeps(int philo, int time_to_spleep, long long starting_time,
-				pthread_mutex_t *print);
-void		philo_thinks(int philo, long long starting_time,
-				pthread_mutex_t *print);
-void		philo_dies(int philo, long long starting_time,
-				pthread_mutex_t *print);
+void		philo_eat(int philo, int time_eating, t_args *args);
+void		philo_sleep(int philo, int time_to_spleep, struct timeval init_tv);
+void		philo_think(int philo, struct timeval init_tv);
+void		philo_die(int philo, struct timeval init_tv);
 
 // time
-long long	time_now(void);
-long long	get_delta_time(long long start);
-void		time_wait(int delta_time, long long start);
+long long	get_delta_time(struct timeval init_tv);
+void		time_wait(int time, struct timeval tv);
 
 // utils
 int			ft_isdigit(int c);
@@ -114,7 +109,5 @@ int			ft_atoi(const char *nptr);
 long int	ft_atol(const char *nptr); //
 void		*malloc_error(void);
 void		*pthread_error(pthread_t *philos, int philo_nbr);
-void		print_action(long long time, int philo, char *action,
-				pthread_mutex_t *print);
 
 #endif
