@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/11 14:51:08 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/11 15:54:20 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -g -pthread
 
 SRC_DIR	=	src
-SRC		=	main.c handle_input.c forks.c args.c philosophers.c routine.c actions.c \
-			$(UTILS)
-UTILS	=	order.c time.c error.c utils.c
+SRC		=	main.c handle_input.c data.c forks.c args.c philosophers.c \
+			routine.c actions.c $(UTILS)
+UTILS	=	time.c error.c utils.c
 HEADER	=	philosophers.h
 
 OBJ_DIR	=	obj

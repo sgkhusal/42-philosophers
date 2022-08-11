@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 14:47:18 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:54:59 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,11 @@ typedef struct s_args
 	long long	next_eat;
 }				t_args;
 
-// check input
+// input
 int			handle_input(int argc, char *argv[], t_data *input);
 void		fill_data(t_data *data);
 
 // threads
-int			**create_matrix_order(int nbr_of_philos);
 t_fork		*create_forks(int nbr_of_forks);
 t_args		*create_args(t_data *data, t_fork *forks);
 pthread_t	*create_philos(int nbr_of_philos, t_args *args);

@@ -6,39 +6,11 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:42:53 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 14:52:53 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:50:31 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	print_matrix(int **m, int size)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (j < size)
-		{
-			printf("%i ", m[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
-void	fill_data(t_data *data)
-{
-	data->simulation = data->nbr_of_philos;
-	data->order = create_matrix_order(data->nbr_of_philos);
-	print_matrix(data->order, data->nbr_of_philos);//
-	pthread_mutex_init(&(data->lock_print), NULL);
-	pthread_mutex_init(&(data->lock_data), NULL);
-}
 
 static void	set_philo_forks(t_args *args, t_fork *forks, int index,
 	int nbr_of_philos)

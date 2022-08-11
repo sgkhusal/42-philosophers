@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 01:28:56 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:31:27 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void	philo_takes_forks(int nbr, long long starting_time, t_args *philo)
 
 void	set_simulation(t_args *philo)
 {
-	//pthread_mutex_lock(&(philo->data->lock_data));
+	pthread_mutex_lock(&(philo->data->lock_data));
 	philo->data->simulation--;
-	//pthread_mutex_unlock(&(philo->data->lock_data));
+	pthread_mutex_unlock(&(philo->data->lock_data));
 }
 
 void	update_must_eat(t_args *philo)

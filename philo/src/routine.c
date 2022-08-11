@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 18:38:36 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 14:50:32 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 15:35:02 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*only_one_philo_routine(void *args)
 	time_wait(philo->data->time.to_die, philo->data->starting_time);
 	philo_dies(1, philo->data->starting_time, &(philo->data->lock_print));
 	pthread_mutex_unlock(&(philo->right_fork->lock));
-	return (args);
+	return (NULL);
 }
 
 /* void	wait_to_eat(t_args args, int *iteration)
@@ -39,9 +39,9 @@ int	simulation(t_args *philo)
 {
 	int	simulation;
 
-	//pthread_mutex_lock(&(philo->data->lock_data));
+	pthread_mutex_lock(&(philo->data->lock_data));
 	simulation = philo->data->simulation;
-	//pthread_mutex_unlock(&(philo->data->lock_data));
+	pthread_mutex_unlock(&(philo->data->lock_data));
 	return (simulation);
 }
 
@@ -61,7 +61,8 @@ void	*routine(void *args)
 			continue ;
 		}
 		philo_eats(philo->nbr, philo->data->time.eating, philo);
-		//printf("Philo %i, simulation = %i, must_eat = %i\n", philo->nbr, philo->data->simulation, philo->must_eat);
+		/* if (!philo->must_eat)
+			break ; */
 		if (simulation(philo) == STOP) // pode passar para a função de dormir
 			break ;
 		philo_sleeps(philo->nbr, philo->data->time.sleeping, philo->data->starting_time, &(philo->data->lock_print));
@@ -70,7 +71,7 @@ void	*routine(void *args)
 		philo_thinks(philo->nbr, philo->data->starting_time, &(philo->data->lock_print));
 		//wait_to_eat(philo->last_time_eating, philo->next_time_eating);
 	}
-	return (args);
+	return (NULL);
 }
 
 // criar uma nova rotina, levando em conta o tempo para comer
