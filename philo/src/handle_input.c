@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:17:50 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 00:29:58 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 14:24:57 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ static void	transform_input(int argc, char *argv[], t_data *input)
 	input->time.eating = ft_atoi(argv[3]);
 	input->time.sleeping = ft_atoi(argv[4]);
 	if (argc == 6)
-		input->simulation = ft_atoi(argv[5]);
+		input->nbr_of_times_must_eat = ft_atoi(argv[5]);
 	else
-		input->simulation = -1;
+		input->nbr_of_times_must_eat = -1;
 }
 
 int	handle_input(int argc, char *argv[], t_data *input)

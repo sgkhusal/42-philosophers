@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 18:38:36 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 01:01:27 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 14:50:32 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*routine(void *args)
 	philo = (t_args *)args;
 	if (philo->next_eat != 0)
 		usleep(philo->next_eat * 0.9 * 1000);
-	printf("Philo %i, simulation = %i, must_eat = %i\n", philo->nbr, philo->data->simulation, philo->must_eat);
+	//printf("Philo %i, simulation = %i, must_eat = %i\n", philo->nbr, philo->data->simulation, philo->must_eat);
 	while (simulation(philo))
 	{
 		if (!philo->right_fork->available || !philo->left_fork->available)
@@ -61,7 +61,7 @@ void	*routine(void *args)
 			continue ;
 		}
 		philo_eats(philo->nbr, philo->data->time.eating, philo);
-		printf("Philo %i, simulation = %i, must_eat = %i\n", philo->nbr, philo->data->simulation, philo->must_eat);
+		//printf("Philo %i, simulation = %i, must_eat = %i\n", philo->nbr, philo->data->simulation, philo->must_eat);
 		if (simulation(philo) == STOP) // pode passar para a função de dormir
 			break ;
 		philo_sleeps(philo->nbr, philo->data->time.sleeping, philo->data->starting_time, &(philo->data->lock_print));

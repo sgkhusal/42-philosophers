@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 01:09:47 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 01:28:56 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	philo_eats(int nbr, int time_eating, t_args *philo)
 		return ;
 	} */
 	print_action(delta_time, nbr, "is eating", &(philo->data->lock_print));
-	time_wait(time_eating, eating_start); // verificar se precisa colocar menor que 0.9
+	time_wait(time_eating, eating_start);
 	philo->right_fork->available = YES;
 	philo->left_fork->available = YES;
 	pthread_mutex_unlock(&(philo->right_fork->lock));
@@ -96,4 +96,5 @@ void	philo_thinks(int philo, long long starting_time, pthread_mutex_t *print)
 	delta_time = get_delta_time(starting_time);
 	print_action(delta_time, philo, "is thinking", print);
 	usleep(1000); // ver se isso impacta em casos com delta t muito pequeno
+	//equivale a 1 milisegundo
 }

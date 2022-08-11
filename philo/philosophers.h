@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 00:53:16 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 14:47:18 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_fork
 typedef struct s_data
 {
 	int				nbr_of_philos;
+	int				nbr_of_times_must_eat;
 	int				simulation;
 	int				**order;
 	t_time			time;
@@ -82,6 +83,7 @@ typedef struct s_args
 
 // check input
 int			handle_input(int argc, char *argv[], t_data *input);
+void		fill_data(t_data *data);
 
 // threads
 int			**create_matrix_order(int nbr_of_philos);

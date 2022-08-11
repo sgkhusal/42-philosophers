@@ -6,30 +6,11 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:57:12 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 00:45:01 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 14:30:23 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	print_matrix(int **m, int size)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (j < size)
-		{
-			printf("%i ", m[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
 
 int	main(int argc, char *argv[])
 {
@@ -40,8 +21,7 @@ int	main(int argc, char *argv[])
 
 	if (handle_input(argc, argv, &data) == FAILED)
 		return (E_INVAL);
-	data.order = create_matrix_order(data.nbr_of_philos);
-	print_matrix(data.order, data.nbr_of_philos);//
+	fill_data(&data);
 	forks = create_forks(data.nbr_of_philos);
 	if (forks == NULL)
 		return (E_MALLOC);
