@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/08 10:55:33 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 00:46:25 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-pthread_t	*create_one_philo(pthread_t *philo, t_args *args)
+static pthread_t	*create_one_philo(pthread_t *philo, t_args *args)
 {
-	struct timeval	init_time;
-
-	gettimeofday(&init_time, NULL);
-	args->init_time = init_time;
+	args->data->starting_time = time_now();
 	if (pthread_create(philo, NULL, &only_one_philo_routine, (void *)args) != 0)
 		pthread_error(philo, args->nbr);
 	return (philo);
@@ -25,7 +22,7 @@ pthread_t	*create_one_philo(pthread_t *philo, t_args *args)
 
 pthread_t	*create_philos(int nbr_of_philos, t_args *args)
 {
-	struct timeval	init_time;
+	long long		starting_time;
 	pthread_t		*philos;
 	int				i;
 
@@ -35,10 +32,10 @@ pthread_t	*create_philos(int nbr_of_philos, t_args *args)
 	if (nbr_of_philos == 1)
 		return (create_one_philo(philos, args));
 	i = 0;
-	gettimeofday(&init_time, NULL);
+	starting_time = time_now();
 	while (i < nbr_of_philos)
 	{
-		args[i].init_time = init_time;
+		args[i].data->starting_time = starting_time;
 		if (pthread_create(&philos[i], NULL, &routine, (void *)&args[i]) != 0)
 			return (pthread_error(philos, args[i].nbr));
 		i++;

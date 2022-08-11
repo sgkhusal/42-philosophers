@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:57:12 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/08 16:00:30 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 00:45:01 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,22 @@ int	main(int argc, char *argv[])
 	pthread_t	*philos;
 	t_fork		*forks;
 	t_args		*args;
-	t_input		input;
-	int			**order;
-	pthread_mutex_t	print;
+	t_data		data;
 
-	if (handle_input(argc, argv, &input) == FAILED)
+	if (handle_input(argc, argv, &data) == FAILED)
 		return (E_INVAL);
-	order = create_matrix_order(input.nbr_of_philos);
-	print_matrix(order, input.nbr_of_philos);//
-	forks = create_forks(input.nbr_of_philos);
+	data.order = create_matrix_order(data.nbr_of_philos);
+	print_matrix(data.order, data.nbr_of_philos);//
+	forks = create_forks(data.nbr_of_philos);
 	if (forks == NULL)
 		return (E_MALLOC);
-	args = create_args(input, forks, order, &print);
+	args = create_args(&data, forks);
 	if (args == NULL)
 		return (E_MALLOC); // must clean forks
-	philos = create_philos(input.nbr_of_philos, args);
+	philos = create_philos(data.nbr_of_philos, args);
 	if (philos == NULL)
 		return (E_MALLOC); // must clean forks and philo_args
-	join_philos(philos, input.nbr_of_philos);
+	join_philos(philos, data.nbr_of_philos);
 	// verificar se algum problema nos joins
 	// se algum filósofo morre tem que retornar algum erro?
 	// como parar o programa se algum filósofo morre?

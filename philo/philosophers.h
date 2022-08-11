@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/08 16:02:27 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 00:53:16 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,57 +51,61 @@ typedef struct s_time
 	int	sleeping;
 }				t_time;
 
-typedef struct s_input
-{
-	int			nbr_of_philos;
-	long int	nbr_of_times_must_eat;
-	t_time		time;
-}				t_input;
-
 typedef struct s_fork
 {
 	int				available;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	lock;
 }					t_fork;
+
+typedef struct s_data
+{
+	int				nbr_of_philos;
+	int				simulation;
+	int				**order;
+	t_time			time;
+	long long		starting_time;
+	pthread_mutex_t	lock_print;
+	pthread_mutex_t	lock_data;
+}					t_data;
 
 typedef struct s_args
 {
-	int				nbr;
-	int				total_philos;
-	t_time			time;
-	int				must_eat;
-	int				*died; // se morreu
-	int				*simulation;
-	int				**order;
-	t_fork			*left_fork;
-	t_fork			*right_fork;
-	unsigned long	last_time_eating; //
-	unsigned long	next_time_eating;
-	pthread_mutex_t	*print;
-	struct timeval	init_time;
+	int			nbr;
+	int			must_eat;
+	//int			iteration;
+	t_data		*data;
+	t_fork		*left_fork;
+	t_fork		*right_fork;
+	long long	last_eat; //
+	long long	next_eat;
 }				t_args;
 
 // check input
-int			handle_input(int argc, char *argv[], t_input *input);
+int			handle_input(int argc, char *argv[], t_data *input);
 
 // threads
 int			**create_matrix_order(int nbr_of_philos);
 t_fork		*create_forks(int nbr_of_forks);
-t_args		*create_args(t_input input, t_fork *forks, int **order, pthread_mutex_t *print);
+t_args		*create_args(t_data *data, t_fork *forks);
 pthread_t	*create_philos(int nbr_of_philos, t_args *args);
 void		*routine(void *arg);
+int			simulation(t_args *philo);
 void		*only_one_philo_routine(void *philo_args);
 void		join_philos(pthread_t *philos, int nbr_of_philos);
 
 // philosopher's actions
 void		philo_eats(int philo, int time_eating, t_args *args);
-void		philo_sleeps(int philo, int time_to_spleep, struct timeval init_tv, pthread_mutex_t *print);
-void		philo_thinks(int philo, struct timeval init_tv, pthread_mutex_t *print);
-void		philo_dies(int philo, struct timeval init_tv, pthread_mutex_t *print);
+void		philo_sleeps(int philo, int time_to_spleep, long long starting_time,
+				pthread_mutex_t *print);
+void		philo_thinks(int philo, long long starting_time,
+				pthread_mutex_t *print);
+void		philo_dies(int philo, long long starting_time,
+				pthread_mutex_t *print);
 
 // time
-long long	get_delta_time(struct timeval init_tv);
-void		time_wait(int time, struct timeval tv);
+long long	time_now(void);
+long long	get_delta_time(long long start);
+void		time_wait(int delta_time, long long start);
 
 // utils
 int			ft_isdigit(int c);

@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:17:50 by sguilher          #+#    #+#             */
-/*   Updated: 2022/07/27 00:19:46 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 00:29:58 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,19 @@ static int	check_valid_number(char *str)
 	return (VALID);
 }
 
-static void	transform_input(int argc, char *argv[], t_input *input)
+static void	transform_input(int argc, char *argv[], t_data *input)
 {
 	input->nbr_of_philos = ft_atoi(argv[1]);
 	input->time.to_die = ft_atoi(argv[2]);
 	input->time.eating = ft_atoi(argv[3]);
 	input->time.sleeping = ft_atoi(argv[4]);
 	if (argc == 6)
-		input->nbr_of_times_must_eat = ft_atoi(argv[5]);
+		input->simulation = ft_atoi(argv[5]);
 	else
-		input->nbr_of_times_must_eat = -1;
+		input->simulation = -1;
 }
 
-int	handle_input(int argc, char *argv[], t_input *input)
+int	handle_input(int argc, char *argv[], t_data *input)
 {
 	int	i;
 
