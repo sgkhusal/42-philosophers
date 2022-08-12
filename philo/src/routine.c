@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 18:38:36 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 00:01:38 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/12 01:16:16 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	*only_one_philo_routine(void *args)
 	pthread_mutex_lock(&(philo->right_fork->lock));
 	philo->right_fork->available = NO;
 	delta_time = get_delta_time(philo->data->starting_time);
-	print_action(delta_time, philo->nbr, "has taken a fork",
-		&(philo->data->lock_print));
+	print_action(delta_time, philo->nbr, "has taken a fork", philo->data);
 	time_wait(philo->data->time.to_die, philo->data->starting_time);
 	pthread_mutex_unlock(&(philo->right_fork->lock));
 	return (NULL);
@@ -88,5 +87,7 @@ void	philo_dies(int philo, long long starting_time, t_data *data)
 	long long		delta_time;
 
 	delta_time = get_delta_time(starting_time);
-	print_action(delta_time, philo, "died", data);
+	pthread_mutex_lock(&(data->lock_print));
+	printf("%-5lld %i %s\n", delta_time, philo, "died");
+	pthread_mutex_unlock(&(data->lock_print));
 }

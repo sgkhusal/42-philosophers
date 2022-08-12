@@ -6,17 +6,21 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 17:17:50 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 14:24:57 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/12 01:08:22 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+static int	input_error(char *str, char *error)
+{
+	printf("%sinvalid argument: %s: %s%s\n", RED, str, error, RESET);
+	return (NOT_VALID);
+}
+
 static void	print_input_error_message(void)
 {
-	printf(RED);
-	printf("Invalid number of arguments. Run:\n");
-	printf(BLUE);
+	printf("%sInvalid number of arguments. Run:\n%s", RED, BLUE);
 	printf("./philo [nbr_of_philosophers] [time_to_die] [time_eating] "
 		"[time_sleeping] [nbr_of_times_each_philosopher_must_eat](optional)\n");
 	printf(RESET);
@@ -25,6 +29,7 @@ static void	print_input_error_message(void)
 static int	check_valid_number(char *str)
 {
 	int	i;
+	int	nb;
 
 	i = 0;
 	if (str[i] && str[i] == '+')
@@ -32,21 +37,14 @@ static int	check_valid_number(char *str)
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-		{
-			printf(RED);
-			printf("invalid argument: %s: must be a positive integer\n", str);
-			printf(RESET);
-			return (NOT_VALID);
-		}
+			return (input_error(str, "must be a positive integer"));
 		i++;
 	}
-	if (i > 11 || ft_atol(str) > INT_MAX)
-	{
-		printf(RED);
-		printf("invalid argument: %s: number too big\n", str);
-		printf(RESET);
-		return (NOT_VALID);
-	}
+	nb = ft_atol(str);
+	if (nb == 0)
+		return (input_error(str, "number must be greater than zero"));
+	if (i > 11 || nb > INT_MAX)
+		return (input_error(str, "number too big"));
 	return (VALID);
 }
 
@@ -69,13 +67,6 @@ int	handle_input(int argc, char *argv[], t_data *input)
 	if (argc < 5 || argc > 6)
 	{
 		print_input_error_message();
-		return (FAILED);
-	}
-	if (ft_atoi(argv[1]) <= 0)
-	{
-		printf(RED);
-		printf("Invalid number of philosophers.\n");
-		printf(RESET);
 		return (FAILED);
 	}
 	i = 1;

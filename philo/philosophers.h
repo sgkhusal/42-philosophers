@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 23:52:15 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/12 01:14:26 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,9 @@ void		join_philos(pthread_t *philos, int nbr_of_philos);
 // philosopher's actions
 void		philo_eats(int philo, int time_eating, t_args *args);
 void		philo_sleeps(int philo, int time_to_spleep, long long starting_time,
-				pthread_mutex_t *print);
-void		philo_thinks(int philo, long long starting_time,
-				pthread_mutex_t *print);
-void		philo_dies(int philo, long long starting_time,
-				pthread_mutex_t *print);
+				t_data *data);
+void		philo_thinks(int philo, long long starting_time, t_data *data);
+void		philo_dies(int philo, long long starting_time, t_data *data);
 
 // time
 long long	time_now(void);
@@ -113,7 +111,7 @@ void		time_wait2(int time_to_wait, long long start);
 // utils
 int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
-long int	ft_atol(const char *nptr); //
+long int	ft_atol(const char *nptr);
 void		*malloc_error(void);
 void		*pthread_error(pthread_t *philos, int philo_nbr);
 void		print_action(long long time, int philo, char *action, t_data *data);

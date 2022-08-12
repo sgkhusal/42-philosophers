@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:57:12 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 00:09:19 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/12 00:10:51 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	main(int argc, char *argv[])
 	join_philos(philos, data.nbr_of_philos);
 	// verificar se algum problema nos joins
 	// se algum filósofo morre tem que retornar algum erro?
-	// como parar o programa se algum filósofo morre?
 	// limpar forks, philos, args
 	return (0);
 }
