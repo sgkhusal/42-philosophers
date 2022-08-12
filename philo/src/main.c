@@ -6,11 +6,40 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:57:12 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 14:30:23 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/12 00:09:19 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	simulation_monitoring(t_args *philos, t_data *data)
+{
+	int	i;
+	int	delta;
+
+	while (simulation(data) != STOP)
+	{
+		i = 0;
+		while (i < data->nbr_of_philos)
+		{
+			if (simulation(data) == STOP)
+				break ;
+			pthread_mutex_lock(&(philos[i].lock_philo));
+			delta = time_now() - philos[i].last_eat;
+			if (delta >= data->time.to_die)
+			{
+				pthread_mutex_lock(&(data->lock_data));
+				data->simulation = STOP;
+				pthread_mutex_unlock(&(data->lock_data));
+				usleep(100);
+				philo_dies(i + 1, data->starting_time, data);
+			}
+			pthread_mutex_unlock(&(philos[i].lock_philo));
+			i++;
+		}
+		usleep(100);
+	}
+}
 
 int	main(int argc, char *argv[])
 {
@@ -31,6 +60,7 @@ int	main(int argc, char *argv[])
 	philos = create_philos(data.nbr_of_philos, args);
 	if (philos == NULL)
 		return (E_MALLOC); // must clean forks and philo_args
+	simulation_monitoring(args, &data);
 	join_philos(philos, data.nbr_of_philos);
 	// verificar se algum problema nos joins
 	// se algum filósofo morre tem que retornar algum erro?

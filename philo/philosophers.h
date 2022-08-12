@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 16:22:05 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/11 23:52:15 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_args
 {
 	int				nbr;
 	int				must_eat;
-	//int			iteration;
+	int				iteration;
 	t_data			*data;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
@@ -91,7 +91,7 @@ t_fork		*create_forks(int nbr_of_forks);
 t_args		*create_args(t_data *data, t_fork *forks);
 pthread_t	*create_philos(int nbr_of_philos, t_args *args);
 void		*routine(void *arg);
-int			simulation(t_args *philo);
+int			simulation(t_data *data);
 void		*only_one_philo_routine(void *philo_args);
 void		join_philos(pthread_t *philos, int nbr_of_philos);
 
@@ -108,6 +108,7 @@ void		philo_dies(int philo, long long starting_time,
 long long	time_now(void);
 long long	get_delta_time(long long start);
 void		time_wait(int delta_time, long long start);
+void		time_wait2(int time_to_wait, long long start);
 
 // utils
 int			ft_isdigit(int c);
@@ -115,7 +116,6 @@ int			ft_atoi(const char *nptr);
 long int	ft_atol(const char *nptr); //
 void		*malloc_error(void);
 void		*pthread_error(pthread_t *philos, int philo_nbr);
-void		print_action(long long time, int philo, char *action,
-				pthread_mutex_t *print);
+void		print_action(long long time, int philo, char *action, t_data *data);
 
 #endif
