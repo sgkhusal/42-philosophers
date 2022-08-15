@@ -5,72 +5,51 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/15 17:42:29 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/10 20:56:22 by sguilher         ###   ########.fr       */
+/*   Created: 2022/07/26 20:11:17 by sguilher          #+#    #+#             */
+/*   Updated: 2022/08/12 02:19:44 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_isdigit(int c)
+void	print_action(long long time, int philo, char *action, t_data *data)
 {
-	return (c >= '0' && c <= '9');
+	if (simulation(data) == STOP)
+			return ;
+	pthread_mutex_lock(&(data->lock_print));
+	printf("%-5lld %i %s\n", time, philo, action);
+	pthread_mutex_unlock(&(data->lock_print));
 }
 
-static int	return_not_int(int sign)
+int	simulation(t_data *data)
 {
-	if (sign == 1)
-		return (-1);
-	else
-		return (0);
+	int	simulation;
+
+	pthread_mutex_lock(&(data->lock_data));
+	simulation = data->simulation;
+	pthread_mutex_unlock(&(data->lock_data));
+	return (simulation);
 }
 
-int	ft_atoi(const char *nptr)
+void	set_simulation(t_data *data)
 {
-	unsigned long long	n;
-	int					i;
-	int					sign;
-
-	i = 0;
-	sign = 1;
-	n = 0;
-	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
-		i++;
-	if (nptr[i] == '-')
-		sign = -1;
-	if (nptr[i] == '+' || nptr[i] == '-')
-		i++;
-	while (ft_isdigit(nptr[i]))
+	if (simulation(data) != STOP)
 	{
-		n = n * 10 + (nptr[i] - 48);
-		i++;
+		pthread_mutex_lock(&(data->lock_data));
+		data->simulation--;
+		pthread_mutex_unlock(&(data->lock_data));
 	}
-	if (n > 9223372036854775807)
-		return (return_not_int(sign));
-	return (n * sign);
 }
 
-long int	ft_atol(const char *nptr)
+void	*malloc_error(void)
 {
-	unsigned long long	n;
-	int					i;
-	int					sign;
+	write(2, "Malloc error.\n", 15);
+	return (NULL);
+}
 
-	i = 0;
-	sign = 1;
-	n = 0;
-	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
-		i++;
-	if (nptr[i] == '-')
-		sign = -1;
-	if (nptr[i] == '+' || nptr[i] == '-')
-		i++;
-	while (ft_isdigit(nptr[i]))
-	{
-		n = n * 10 + (nptr[i] - 48);
-		i++;
-	}
-	if (n > 9223372036854775807)
-		return (return_not_int(sign));
-	return (n * sign);
+void	*pthread_error(pthread_t *philos, int philo_nbr)
+{
+	printf("Error creating philo %i thread.\n", philo_nbr);
+	free (philos); // tá certo fazer isso antes de dar free nas outras threads?
+	return (NULL);
 }

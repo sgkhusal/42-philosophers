@@ -6,20 +6,11 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 00:01:59 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/12 02:14:21 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	print_action(long long time, int philo, char *action, t_data *data)
-{
-	if (simulation(data) == STOP)
-			return ;
-	pthread_mutex_lock(&(data->lock_print));
-	printf("%-5lld %i %s\n", time, philo, action);
-	pthread_mutex_unlock(&(data->lock_print));
-}
 
 static void	philo_takes_forks(int nbr, long long starting_time, t_args *philo)
 {
@@ -35,19 +26,12 @@ static void	philo_takes_forks(int nbr, long long starting_time, t_args *philo)
 	print_action(time, nbr, "has taken a fork", philo->data);
 }
 
-void	set_simulation(t_data *data)
-{
-	pthread_mutex_lock(&(data->lock_data));
-	data->simulation--;
-	pthread_mutex_unlock(&(data->lock_data));
-}
-
 void	update_must_eat(t_args *philo)
 {
 	if (philo->must_eat > 0)
 	{
 		philo->must_eat--;
-		if (philo->must_eat == NO && simulation(philo->data) != STOP)
+		if (philo->must_eat == NO)
 			set_simulation(philo->data);
 	}
 }

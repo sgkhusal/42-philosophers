@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 18:38:36 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 01:16:16 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/12 01:36:29 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,6 @@ void	wait_to_eat(t_args *philo, int time_sleeping, int time_eating)
 		time_wait2(time_eating * 3, philo->last_eat);
 		philo->iteration++;
 	}
-}
-
-// TODO: lidar com os deltas ts == 0!!
-
-int	simulation(t_data *data)
-{
-	int	simulation;
-
-	pthread_mutex_lock(&(data->lock_data));
-	simulation = data->simulation;
-	pthread_mutex_unlock(&(data->lock_data));
-	return (simulation);
 }
 
 void	*routine(void *args)

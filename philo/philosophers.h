@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 01:14:26 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/12 01:44:47 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_args
 	t_data			*data;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
-	long long		last_eat; //
+	long long		last_eat;
 	long long		next_eat;
 	pthread_mutex_t	lock_philo;
 }				t_args;
@@ -92,6 +92,7 @@ t_args		*create_args(t_data *data, t_fork *forks);
 pthread_t	*create_philos(int nbr_of_philos, t_args *args);
 void		*routine(void *arg);
 int			simulation(t_data *data);
+void		set_simulation(t_data *data);
 void		*only_one_philo_routine(void *philo_args);
 void		join_philos(pthread_t *philos, int nbr_of_philos);
 
