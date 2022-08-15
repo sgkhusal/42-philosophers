@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:11:17 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 02:19:44 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:10:58 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_action(long long time, int philo, char *action, t_data *data)
 {
 	if (simulation(data) == STOP)
-			return ;
+		return ;
 	pthread_mutex_lock(&(data->lock_print));
 	printf("%-5lld %i %s\n", time, philo, action);
 	pthread_mutex_unlock(&(data->lock_print));
@@ -49,7 +49,15 @@ void	*malloc_error(void)
 
 void	*pthread_error(pthread_t *philos, int philo_nbr)
 {
+	int	i;
+
 	printf("Error creating philo %i thread.\n", philo_nbr);
-	free (philos); // tá certo fazer isso antes de dar free nas outras threads?
+	i = 0;
+	while (i < philo_nbr)
+	{
+		pthread_detach(philos[i]);
+		i++;
+	}
+	free (philos);
 	return (NULL);
 }

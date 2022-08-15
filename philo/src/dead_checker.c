@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 11:42:40 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 11:45:42 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:11:29 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@ void	simulation_monitoring(t_args *philos, t_data *data)
 	while (simulation(data) != STOP)
 	{
 		i = 0;
-		//printf("last_eat = %lli\n", philos[i].last_eat);
 		while (i < data->nbr_of_philos)
 		{
 			if (simulation(data) == STOP)
 				break ;
 			pthread_mutex_lock(&(philos[i].lock_philo));
 			delta = time_now() - philos[i].last_eat;
-			//printf("delta = %i\n", delta);
 			if (delta >= data->time.to_die)
 			{
 				pthread_mutex_lock(&(data->lock_data));

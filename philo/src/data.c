@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 02:03:19 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 11:02:43 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:07:10 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,30 +89,10 @@ static int	**create_matrix_order(int nbr_of_philos)
 	return (order);
 }
 
-static void	print_matrix(int **m, int size) ///////
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (j < size)
-		{
-			printf("%i ", m[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
 void	fill_data(t_data *data)
 {
 	data->simulation = data->nbr_of_philos;
 	data->order = create_matrix_order(data->nbr_of_philos);
-	print_matrix(data->order, data->nbr_of_philos);
 	pthread_mutex_init(&(data->lock_print), NULL);
 	pthread_mutex_init(&(data->lock_data), NULL);
 }

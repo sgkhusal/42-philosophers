@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 11:45:48 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:04:39 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ long int	ft_atol(const char *nptr);
 void		*malloc_error(void);
 void		*pthread_error(pthread_t *philos, int philo_nbr);
 void		print_action(long long time, int philo, char *action, t_data *data);
-void		clean_variables(t_data *data, t_fork *forks, t_args *args, pthread_t *philos);
+void		clean_variables(t_data *data, t_fork *forks, t_args *args,
+				pthread_t *philos);
 int			handle_error(int error, t_data *data, t_fork *forks, t_args *args);
 
 #endif

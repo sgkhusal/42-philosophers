@@ -6,16 +6,17 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 11:11:41 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 11:39:30 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:05:26 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	clean_variables(t_data *data, t_fork *forks, t_args *args, pthread_t *philos)
+void	clean_variables(t_data *data, t_fork *forks, t_args *args,
+	pthread_t *philos)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < data->nbr_of_philos)
 	{
@@ -36,7 +37,7 @@ void	clean_variables(t_data *data, t_fork *forks, t_args *args, pthread_t *philo
 static void	clean_data(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < data->nbr_of_philos)
 	{
@@ -51,7 +52,7 @@ static void	clean_data(t_data *data)
 static void	clean_forks(t_fork	*forks, int nbr_of_philos)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < nbr_of_philos)
 	{
@@ -64,7 +65,7 @@ static void	clean_forks(t_fork	*forks, int nbr_of_philos)
 static void	clean_args(t_args	*args, int nbr_of_philos)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < nbr_of_philos)
 	{

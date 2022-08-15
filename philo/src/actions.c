@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 11:53:44 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:03:30 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,5 @@ void	philo_thinks(int philo, long long starting_time, t_data *data)
 
 	delta_time = get_delta_time(starting_time);
 	print_action(delta_time, philo, "is thinking", data);
-	usleep(100); // equivale a 0.1 milisegundo
+	usleep(100);
 }
