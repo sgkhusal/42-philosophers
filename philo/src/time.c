@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:05:58 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 22:54:44 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 12:09:09 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	time_wait(int time_to_wait, long long start)
 {
 	long long	delta_time;
 
-	usleep(time_to_wait * 0.9 * 1000); // determinar o melhor valor
+	usleep(time_to_wait * 0.9 * 1000);
 	delta_time = time_now() - start;
 	while (delta_time < time_to_wait)
 	{

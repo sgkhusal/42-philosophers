@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 18:38:36 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 01:36:29 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 11:44:52 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,4 @@ void	*routine(void *args)
 			philo->data->time.eating);
 	}
 	return (NULL);
-}
-
-void	philo_dies(int philo, long long starting_time, t_data *data)
-{
-	long long		delta_time;
-
-	delta_time = get_delta_time(starting_time);
-	pthread_mutex_lock(&(data->lock_print));
-	printf("%-5lld %i %s\n", delta_time, philo, "died");
-	pthread_mutex_unlock(&(data->lock_print));
 }

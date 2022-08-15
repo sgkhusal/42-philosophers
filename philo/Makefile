@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/15 11:13:03 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/15 11:46:19 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS	=	-Wall -Wextra -Werror -g -pthread
 
 SRC_DIR	=	src
 SRC		=	main.c handle_input.c data.c forks.c args.c philosophers.c \
-			routine.c actions.c $(UTILS)
+			routine.c actions.c dead_checker.c $(UTILS)
 UTILS	=	time.c utils.c utils_libft.c clean.c
 HEADER	=	philosophers.h
 

@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 11:40:08 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 11:45:48 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,11 @@ void		fill_data(t_data *data);
 t_fork		*create_forks(int nbr_of_forks);
 t_args		*create_args(t_data *data, t_fork *forks);
 pthread_t	*create_philos(int nbr_of_philos, t_args *args);
+void		*only_one_philo_routine(void *philo_args);
 void		*routine(void *arg);
 int			simulation(t_data *data);
 void		set_simulation(t_data *data);
-void		*only_one_philo_routine(void *philo_args);
+void		simulation_monitoring(t_args *philos, t_data *data);
 void		join_philos(pthread_t *philos, int nbr_of_philos);
 
 // philosopher's actions
@@ -100,7 +101,6 @@ void		philo_eats(int philo, int time_eating, t_args *args);
 void		philo_sleeps(int philo, int time_to_spleep, long long starting_time,
 				t_data *data);
 void		philo_thinks(int philo, long long starting_time, t_data *data);
-void		philo_dies(int philo, long long starting_time, t_data *data);
 
 // time
 long long	time_now(void);
