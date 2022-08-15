@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 18:38:36 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 17:47:44 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 17:55:13 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	wait_to_eat(t_args *philo, int time_sleeping, int time_eating)
 	}
 }
 
-int	get_fork(t_fork *fork)
+static int	get_fork(t_fork *fork)
 {
 	int	available;
 
