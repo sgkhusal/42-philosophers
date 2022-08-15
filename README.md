@@ -1,4 +1,4 @@
 # Philosophers
 
 <p>
-<img src="./images/philosophers.png" align="right" width="200px"/>
+<img src="./images/philosophers.png" align="center" width="700px"/>
