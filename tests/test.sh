@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    test.sh                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/21 20:10:24 by sguilher          #+#    #+#              #
-#    Updated: 2022/07/22 18:23:41 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/15 12:50:52 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,7 +122,7 @@ for testfile in ${test_lists[*]}; do
 		fi
 
 		if [[ $testfile == "count_eat" ]]; then
-			if [ $(echo $EATING_PRINTS $MUST_EAT | awk '{print $1 >= $2}') ]; then
+			if [ "$EATING_PRINTS" -ge "$MUST_EAT" ]; then
 				if [ "$DIED_PRINTS" ]; then
 					printf ❌
 					printf "$GREY ./philo $test \n$END"
