@@ -6,13 +6,13 @@
 #    By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/15 11:46:19 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/15 17:36:54 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	philo
 CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror -g -pthread
+CFLAGS	=	-Wall -Wextra -Werror -g -pthread -fsanitize=thread
 
 SRC_DIR	=	src
 SRC		=	main.c handle_input.c data.c forks.c args.c philosophers.c \

@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 10:56:52 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 17:35:20 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ pthread_t	*create_philos(int nbr_of_philos, t_args *args)
 		return (create_one_philo(philos, args));
 	i = 0;
 	starting_time = time_now();
+	args->data->starting_time = starting_time;
 	while (i < nbr_of_philos)
 	{
-		args[i].data->starting_time = starting_time;
 		args[i].last_eat = starting_time;
 		if (pthread_create(&philos[i], NULL, &routine, (void *)&args[i]) != 0)
 			return (pthread_error(philos, args[i].nbr));
