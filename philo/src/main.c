@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:57:12 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 01:53:27 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 11:39:22 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,21 @@ int	main(int argc, char *argv[])
 	if (handle_input(argc, argv, &data) == FAILED)
 		return (E_INVAL);
 	fill_data(&data);
+	forks = NULL;
+	args = NULL;
+	if (data.order == NULL)
+		return (handle_error(1, &data, forks, args));
 	forks = create_forks(data.nbr_of_philos);
 	if (forks == NULL)
-		return (E_MALLOC);
+		return (handle_error(2, &data, forks, args));
 	args = create_args(&data, forks);
 	if (args == NULL)
-		return (E_MALLOC); // must clean forks
+		return (handle_error(3, &data, forks, args));
 	philos = create_philos(data.nbr_of_philos, args);
 	if (philos == NULL)
-		return (E_MALLOC); // must clean forks and philo_args
+		return (handle_error(4, &data, forks, args));
 	simulation_monitoring(args, &data);
 	join_philos(philos, data.nbr_of_philos);
-	// verificar se algum problema nos joins
-	// se algum filósofo morre tem que retornar algum erro?
-	// limpar forks, philos, args
+	clean_variables(&data, forks, args, philos);
 	return (0);
 }

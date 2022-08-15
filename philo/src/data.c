@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   order.c                                            :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 02:03:19 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/11 15:51:13 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 11:02:43 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,14 @@ static int	**create_matrix_order(int nbr_of_philos)
 	while (i < nbr_of_philos)
 	{
 		order[i] = malloc(sizeof(int) * nbr_of_philos);
+		if (order[i] == NULL)
+		{
+			free(order);
+			order = NULL;
+			return (malloc_error());
+		}
 		i++;
 	}
-	i = 0;
 	if (nbr_of_philos == 1)
 		order[0][0] = 1;
 	else if (nbr_of_philos % 2 == 0)
@@ -107,7 +112,7 @@ void	fill_data(t_data *data)
 {
 	data->simulation = data->nbr_of_philos;
 	data->order = create_matrix_order(data->nbr_of_philos);
-	print_matrix(data->order, data->nbr_of_philos);//
+	print_matrix(data->order, data->nbr_of_philos);
 	pthread_mutex_init(&(data->lock_print), NULL);
 	pthread_mutex_init(&(data->lock_data), NULL);
 }

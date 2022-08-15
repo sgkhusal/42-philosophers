@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:39:56 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 01:56:09 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 10:56:52 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ pthread_t	*create_philos(int nbr_of_philos, t_args *args)
 	pthread_t		*philos;
 	int				i;
 
+	philos = NULL;
 	philos = malloc(sizeof(pthread_t) * nbr_of_philos);
 	if (philos == NULL)
 		return (malloc_error());

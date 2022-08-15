@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/12 01:30:53 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/15 11:13:03 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS	=	-Wall -Wextra -Werror -g -pthread
 SRC_DIR	=	src
 SRC		=	main.c handle_input.c data.c forks.c args.c philosophers.c \
 			routine.c actions.c $(UTILS)
-UTILS	=	time.c utils.c utils_libft.c
+UTILS	=	time.c utils.c utils_libft.c clean.c
 HEADER	=	philosophers.h
 
 OBJ_DIR	=	obj
@@ -30,8 +30,6 @@ INCLUDE	=	-I ./ -I ./includes
 # rules
 
 all: $(NAME)
-
-bonus: $(BONUS)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $@

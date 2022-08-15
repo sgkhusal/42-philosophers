@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:42:53 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/12 01:43:05 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/15 11:17:57 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_args	*create_args(t_data *data, t_fork *forks)
 			args[i].next_eat = data->time.eating;
 		else
 			args[i].next_eat = 2 * data->time.eating;
-		//args[i].last_eat = 0;
 		args[i].iteration = args[i].next_eat / data->time.eating;
 		pthread_mutex_init(&(args[i].lock_philo), NULL);
 		i++;
