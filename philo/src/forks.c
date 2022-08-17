@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 00:01:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/17 21:14:39 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/17 22:13:30 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,16 @@ void	philo_takes_forks(int nbr, long long starting_time, t_args *philo)
 {
 	long long	time;
 
-	pthread_mutex_lock(&(philo->left_fork->lock));
-	pthread_mutex_lock(&(philo->right_fork->lock));
+	if (nbr % 2)
+	{
+		pthread_mutex_lock(&(philo->left_fork->lock));
+		pthread_mutex_lock(&(philo->right_fork->lock));
+	}
+	else
+	{
+		pthread_mutex_lock(&(philo->right_fork->lock));
+		pthread_mutex_lock(&(philo->left_fork->lock));
+	}
 	update_fork_value(philo->left_fork, NO);
 	update_fork_value(philo->right_fork, NO);
 	time = time_now() - starting_time;
