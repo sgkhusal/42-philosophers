@@ -6,17 +6,16 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/17 21:07:21 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/17 22:02:06 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-# include <unistd.h>
+# include <unistd.h> // write
 # include <stdio.h> // printf
 # include <stdlib.h> // malloc, free
-# include <string.h> // memset - ainda não usando ///////////////
 # include <pthread.h> // threads
 # include <sys/time.h> // gettimeofday
 

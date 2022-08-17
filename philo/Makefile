@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/17 21:17:05 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/17 22:59:13 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ_DIR	=	obj
 OBJ		=	$(SRC:%.c=$(OBJ_DIR)/%.o)
 
 VPATH	=	src
-INCLUDE	=	-I ./ -I ./includes
+INCLUDE	=	-I ./
 
 # **************************************************************************** #
 # rules
@@ -54,7 +54,7 @@ run: $(NAME)
 #	./$(NAME) 5 2000 100 1000 5
 
 leak:	all
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) 5 1000 100 100 5
 
 test:	all
 	cd ../tests && ./test.sh
