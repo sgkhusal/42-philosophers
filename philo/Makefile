@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/17 22:59:13 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/17 23:05:48 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ clean:
 	@echo "removed obj folder"
 
 fclean:	clean
-	@rm -rf $(NAME) $(NAME_BONUS)
+	@rm -rf $(NAME)
 	@echo "removed executable"
 
 re:		fclean all
