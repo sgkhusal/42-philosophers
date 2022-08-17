@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    test.sh                                            :+:      :+:    :+:    #
+#    valgrind-test.sh                                   :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+         #
+#    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/21 20:10:24 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/15 16:34:08 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/17 20:56:09 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 
 PHILO_PATH="../philo/philo"
 VALGRIND="valgrind --tool=helgrind --tool=drd"
+#VALGRIND="valgrind --show-leak-kinds=all"
 
 # Run a specific test if the file name was specified
 if [[ $1 ]]; then

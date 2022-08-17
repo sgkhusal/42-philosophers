@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    test.sh                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+         #
+#    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/21 20:10:24 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/15 16:34:08 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/17 20:49:03 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -131,13 +131,13 @@ for testfile in ${test_lists[*]}; do
 					printf ✅
 					((ok++))
 					printf "$GREY ./philo $test \n$END"
-					printf "get:$GREEN $EATING_PRINTS$END eating messages\n"
+					printf "got:$GREEN $EATING_PRINTS$END eating messages\n"
 				fi
 			else
 				printf ❌
 				printf "$GREY ./philo $test \n$END"
 				printf "expected at least$RED $MUST_EAT$END eating messages\n"
-				printf "get:$RED $EATING_PRINTS$END\n"
+				printf "got:$RED $EATING_PRINTS$END\n"
 				if [ "$DIED_PRINTS" ]; then
 					printf "output:\n$DIED_PRINTS\n"
 				fi
