@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:11:17 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 15:10:58 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/16 17:59:56 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,5 @@ void	set_simulation(t_data *data)
 void	*malloc_error(void)
 {
 	write(2, "Malloc error.\n", 15);
-	return (NULL);
-}
-
-void	*pthread_error(pthread_t *philos, int philo_nbr)
-{
-	int	i;
-
-	printf("Error creating philo %i thread.\n", philo_nbr);
-	i = 0;
-	while (i < philo_nbr)
-	{
-		pthread_detach(philos[i]);
-		i++;
-	}
-	free (philos);
 	return (NULL);
 }

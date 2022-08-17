@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 11:11:41 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 15:05:26 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/16 17:40:56 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	clean_variables(t_data *data, t_fork *forks, t_args *args,
 		free(data->order[i]);
 		pthread_mutex_destroy(&(args[i].lock_philo));
 		pthread_mutex_destroy(&(forks[i].lock));
+		pthread_mutex_destroy(&(forks[i].lock_value));
 		i++;
 	}
 	pthread_mutex_destroy(&(data->lock_print));
@@ -57,6 +58,7 @@ static void	clean_forks(t_fork	*forks, int nbr_of_philos)
 	while (i < nbr_of_philos)
 	{
 		pthread_mutex_destroy(&(forks[i].lock));
+		pthread_mutex_destroy(&(forks[i].lock_value));
 		i++;
 	}
 	free(forks);

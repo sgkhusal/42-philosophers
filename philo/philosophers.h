@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 15:04:39 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/16 19:39:19 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_time
 typedef struct s_fork
 {
 	int				available;
+	pthread_mutex_t	lock_value;
 	pthread_mutex_t	lock;
 }					t_fork;
 
@@ -95,9 +96,12 @@ int			simulation(t_data *data);
 void		set_simulation(t_data *data);
 void		simulation_monitoring(t_args *philos, t_data *data);
 void		join_philos(pthread_t *philos, int nbr_of_philos);
+int			has_fork(t_fork *fork);
 
 // philosopher's actions
 void		philo_eats(int philo, int time_eating, t_args *args);
+void		philo_takes_forks(int nbr, long long starting_time, t_args *philo);
+void		philo_drops_forks(t_args *philo);
 void		philo_sleeps(int philo, int time_to_spleep, long long starting_time,
 				t_data *data);
 void		philo_thinks(int philo, long long starting_time, t_data *data);
@@ -113,7 +117,6 @@ int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
 long int	ft_atol(const char *nptr);
 void		*malloc_error(void);
-void		*pthread_error(pthread_t *philos, int philo_nbr);
 void		print_action(long long time, int philo, char *action, t_data *data);
 void		clean_variables(t_data *data, t_fork *forks, t_args *args,
 				pthread_t *philos);

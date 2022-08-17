@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 18:38:36 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 17:55:13 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/16 19:38:55 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	wait_to_eat(t_args *philo, int time_sleeping, int time_eating)
 	int	must_eat;
 	int	index;
 
-	if (time_sleeping > 2 * time_eating + 10)
+	if (time_sleeping > 2 * time_eating)
 		return ;
 	philo->iteration += 2;
 	index = philo->iteration % philo->data->nbr_of_philos;
@@ -46,16 +46,6 @@ void	wait_to_eat(t_args *philo, int time_sleeping, int time_eating)
 	}
 }
 
-static int	get_fork(t_fork *fork)
-{
-	int	available;
-
-	pthread_mutex_lock(&(fork->lock));
-	available = fork->available;
-	pthread_mutex_unlock(&(fork->lock));
-	return (available);
-}
-
 void	*routine(void *args)
 {
 	t_args	*philo;
@@ -65,7 +55,7 @@ void	*routine(void *args)
 		usleep(philo->next_eat * 0.9 * 1000);
 	while (simulation(philo->data) != STOP)
 	{
-		if (!get_fork(philo->right_fork) || !get_fork(philo->left_fork))
+		if (!has_fork(philo->right_fork) || !has_fork(philo->left_fork))
 		{
 			usleep(500);
 			continue ;

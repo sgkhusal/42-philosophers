@@ -3,30 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 23:58:42 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/15 15:03:30 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/16 17:58:00 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	philo_takes_forks(int nbr, long long starting_time, t_args *philo)
-{
-	long long	time;
-
-	pthread_mutex_lock(&(philo->right_fork->lock));
-	pthread_mutex_lock(&(philo->left_fork->lock));
-	philo->right_fork->available = NO;
-	philo->left_fork->available = NO;
-	time = time_now() - starting_time;
-	print_action(time, nbr, "has taken a fork", philo->data);
-	time = time_now() - starting_time;
-	print_action(time, nbr, "has taken a fork", philo->data);
-}
-
-void	update_must_eat(t_args *philo)
+static void	update_must_eat(t_args *philo)
 {
 	if (philo->must_eat > 0)
 	{
@@ -49,10 +35,7 @@ void	philo_eats(int nbr, int time_eating, t_args *philo)
 	philo->last_eat = eating_start;
 	pthread_mutex_unlock(&(philo->lock_philo));
 	time_wait(time_eating, eating_start);
-	philo->right_fork->available = YES;
-	philo->left_fork->available = YES;
-	pthread_mutex_unlock(&(philo->right_fork->lock));
-	pthread_mutex_unlock(&(philo->left_fork->lock));
+	philo_drops_forks(philo);
 	update_must_eat(philo);
 }
 

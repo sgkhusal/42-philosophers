@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+         #
+#    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/15 17:36:54 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/16 19:52:02 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
