@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/02 20:16:35 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/17 23:05:48 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/18 13:29:57 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,9 +55,6 @@ run: $(NAME)
 
 leak:	all
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) 5 1000 100 100 5
-
-test:	all
-	cd ../tests && ./test.sh
 
 clean:
 	@rm -rf $(OBJ_DIR)

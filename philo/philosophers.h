@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/17 22:02:06 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/17 23:22:35 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_time
 typedef struct s_fork
 {
 	int				available;
-	pthread_mutex_t	lock_value;
 	pthread_mutex_t	lock;
 }					t_fork;
 
