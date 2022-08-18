@@ -6,14 +6,15 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/21 20:10:24 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/17 20:56:09 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/17 23:25:51 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/bash
 
 PHILO_PATH="../philo/philo"
-VALGRIND="valgrind --tool=helgrind --tool=drd"
+VALGRIND="valgrind --tool=helgrind"
+#VALGRIND="valgrind --tool=drd"
 #VALGRIND="valgrind --show-leak-kinds=all"
 
 # Run a specific test if the file name was specified
@@ -70,7 +71,7 @@ for testfile in ${test_lists[*]}; do
 		((i++))
 
 		printf $YELLOW
-		printf "Test %2s: $GREY ./philo $test \n$END" $i
+		printf "Test %2s: $GREY $VALGRIND ./philo $test \n$END" $i
 		$VALGRIND $PHILO_PATH $test > ./outfiles/test$i
 		cat ./outfiles/test$i | grep -v "is sleeping" | grep -v "is eating" | grep -v "is thinking" | grep -v "has taken a fork"
 		printf "\n\n"
