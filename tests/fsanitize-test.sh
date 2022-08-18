@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    test.sh                                            :+:      :+:    :+:    #
+#    fsanitize-test.sh                                  :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sguilher <sguilher@student.42.fr>          +#+  +:+       +#+         #
+#    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/21 20:10:24 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/15 16:34:08 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/18 19:31:11 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,9 +71,16 @@ for testfile in ${test_lists[*]}; do
 		printf "Test %2s: $GREY ./philo $test \n$END" $i
 		$PHILO_PATH $test > ./outfiles/test$i
 		cat ./outfiles/test$i | grep -v "is sleeping" | grep -v "is eating" | grep -v "is thinking" | grep -v "has taken a fork"
-		printf "\n\n"
 	done < $testfile
 	printf "\n"
 done
 
 printf $END
+
+echo "🍽️  🍽️  🍽️"
+echo "🧙 🧙 🧙"
+echo "🍻 🍻 🍻"
+echo "😴 😴 😴"
+echo "🤔 🤔 🤔"
+
+printf "\n"

@@ -1,6 +1,5 @@
 # exec
-#philo
-philo_bonus
+philo
 *.out
 
 # objs
@@ -8,6 +7,5 @@ obj
 *.o
 
 .vscode
-test
 outfiles
 socrates

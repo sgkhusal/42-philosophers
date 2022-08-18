@@ -6,7 +6,7 @@
 #    By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/21 20:10:24 by sguilher          #+#    #+#              #
-#    Updated: 2022/08/17 23:25:51 by sguilher         ###   ########.fr        #
+#    Updated: 2022/08/18 19:30:28 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,9 @@ if [[ $1 ]]; then
 	)
 else
 	test_lists=(
-		"errors"
+		#"errors"
 		"should_die"
-		"should_not_die"
+		#"should_not_die"
 		"count_eat"
 	)
 fi
@@ -80,3 +80,11 @@ for testfile in ${test_lists[*]}; do
 done
 
 printf $END
+
+echo "🍽️  🍽️  🍽️"
+echo "🧙 🧙 🧙"
+echo "🍻 🍻 🍻"
+echo "😴 😴 😴"
+echo "🤔 🤔 🤔"
+
+printf "\n"
