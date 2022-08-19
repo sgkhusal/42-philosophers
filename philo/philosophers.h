@@ -6,7 +6,7 @@
 /*   By: sguilher <sguilher@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 21:20:44 by sguilher          #+#    #+#             */
-/*   Updated: 2022/08/17 23:22:35 by sguilher         ###   ########.fr       */
+/*   Updated: 2022/08/18 23:04:26 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,22 @@
 
 // simulation status
 # define STOP 0
-# define CONTINUE 1
 
-// error numbers
-# define E_INVAL 22
-
-# define INT_MAX 2147483647
-
+// fork available
 # define NO 0
 # define YES 1
+
+// handle input
 # define OK 0
 # define FAILED 1
 # define VALID 1
 # define NOT_VALID 0
+# define E_INVAL 22
+# define INT_MAX 2147483647
 
 // colors
-//# define GREEN "\033[0;32m"
 # define RED "\033[38;2;222;56;43m"
 # define BLUE "\033[38;2;34;183;235m"
-//# define YELLOW "\033[1;33m"
 # define RESET "\033[0m"
 
 typedef struct s_time
@@ -90,11 +87,7 @@ t_args		*create_args(t_data *data, t_fork *forks);
 pthread_t	*create_philos(int nbr_of_philos, t_args *args);
 void		*only_one_philo_routine(void *philo_args);
 void		*routine(void *arg);
-int			simulation(t_data *data);
-void		set_simulation(t_data *data);
-void		simulation_monitoring(t_args *philos, t_data *data);
 void		join_philos(pthread_t *philos, int nbr_of_philos);
-int			has_fork(t_fork *fork);
 
 // philosopher's actions
 void		philo_eats(int philo, int time_eating, t_args *args);
@@ -103,6 +96,11 @@ void		philo_drops_forks(t_args *philo);
 void		philo_sleeps(int philo, int time_to_spleep, long long starting_time,
 				t_data *data);
 void		philo_thinks(int philo, long long starting_time, t_data *data);
+
+// monitoring simulation
+int			simulation(t_data *data);
+void		set_simulation(t_data *data);
+void		simulation_monitoring(t_args *philos, t_data *data);
 
 // time
 long long	time_now(void);
@@ -119,5 +117,6 @@ void		print_action(long long time, int philo, char *action, t_data *data);
 void		clean_variables(t_data *data, t_fork *forks, t_args *args,
 				pthread_t *philos);
 int			handle_error(int error, t_data *data, t_fork *forks, t_args *args);
+int			has_fork(t_fork *fork);
 
 #endif
