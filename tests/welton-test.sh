@@ -13,14 +13,11 @@ reset="\e[0m"
 
 x=1
 time=0.1
-printf $color1
-echo -e "2 100 200 200 should die"
-printf $reset
+echo -e "$color1 2 100 200 200 should die $reset"
 while [ $x -le $tests ]
 do
 	printf $color2
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 2 100 200 200 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -30,14 +27,11 @@ echo
 
 x=1
 time=0.1
-printf $color1
-echo -e "2 150 360 100 should die"
-printf $reset
+echo -e "$color1 2 150 360 100 should die $reset"
 while [ $x -le $tests ]
 do
 	printf $color2
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 2 150 360 100 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -47,14 +41,11 @@ echo
 
 x=1
 time=0.1
-printf $color1
-echo -e "2 150 200 100 should die"
-printf $reset
+echo -e "$color1 2 150 200 100 should die $reset"
 while [ $x -le $tests ]
 do
 	printf $color2
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 2 150 200 100 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -64,14 +55,11 @@ echo
 
 x=1
 time=0.1
-printf $color1
-echo -e "1 400 100 100 7 should die"
-printf $reset
+echo -e "$color1 1 400 100 100 7 should die $reset"
 while [ $x -le $tests ]
 do
 	printf $color2
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 1 400 100 100 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -81,14 +69,11 @@ echo
 
 x=1
 time=0.1
-printf $color3
-echo -e "4 210 100 100 7 not die"
-printf $reset
+echo -e "$color3 4 210 100 100 7 not die $reset"
 while [ $x -le $tests ]
 do
 	printf $color4
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 4 210 100 100 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -98,14 +83,11 @@ echo
 
 x=1
 time=0.1
-printf $color1
-echo -e "1 800 200 200 7 should die"
-printf $reset
+echo -e "$color1 1 800 200 200 7 should die $reset"
 while [ $x -le $tests ]
 do
 	printf $color2
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 1 800 200 200 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -115,14 +97,11 @@ echo
 
 x=1
 time=0.1
-printf $color3
-echo -e "5 800 200 200 7 not die"
-printf $reset
+echo -e "$color3 5 800 200 200 7 not die $reset"
 while [ $x -le $tests ]
 do
 	printf $color4
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 5 800 200 200 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -132,14 +111,11 @@ echo
 
 x=1
 time=0.1
-printf $color1
-echo -e "4 310 200 100 7 should die"
-printf $reset
+echo -e "$color1 4 310 200 100 7 should die $reset"
 while [ $x -le $tests ]
 do
 	printf $color2
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 4 310 200 100 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -149,14 +125,11 @@ echo
 
 x=1
 time=0.1
-printf $color3
-echo -e "5 400 100 100 7 not die"
-printf $reset
+echo -e "$color3 5 400 100 100 7 not die $reset"
 while [ $x -le $tests ]
 do
 	printf $color4
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 5 400 100 100 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -166,14 +139,11 @@ echo
 
 x=1
 time=0.1
-printf $color1
-echo -e "5 200 100 100 7 should die"
-printf $reset
+echo -e "$color1 5 200 100 100 7 should die $reset"
 while [ $x -le $tests ]
 do
 	printf $color2
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 5 200 100 100 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -183,14 +153,11 @@ echo
 
 x=1
 time=0.1
-printf $color3
-echo -e "3 400 100 100 7 not die"
-printf $reset
+echo -e "$color3 3 400 100 100 7 not die $reset"
 while [ $x -le $tests ]
 do
 	printf $color4
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 3 400 100 100 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -200,14 +167,11 @@ echo
 
 x=1
 time=0.1
-printf $color1
-echo -e "3 200 100 100 7 should die"
-printf $reset
+echo -e "$color1 3 200 100 100 7 should die $reset"
 while [ $x -le $tests ]
 do
 	printf $color2
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 3 200 100 100 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -217,14 +181,11 @@ echo
 
 x=1
 time=0.1
-printf $color3
-echo -e "4 410 200 200 7 not die"
-printf $reset
+echo -e "$color3 4 410 200 200 7 not die $reset"
 while [ $x -le $tests ]
 do
 	printf $color4
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 4 410 200 200 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
@@ -234,14 +195,11 @@ echo
 
 x=1
 time=0.1
-printf $color1
-echo -e "4 399 200 200 7 should die"
-printf $reset
+echo -e "$color1 4 399 200 200 7 should die $reset"
 while [ $x -le $tests ]
 do
 	printf $color2
-    echo -e "Test: $x"
-    printf $reset
+    echo -e "Test: $x$reset"
 	$exe 4 399 200 200 7 | grep die
 	sleep $time
 	x=$(( $x + 1 ))
